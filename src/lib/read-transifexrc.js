@@ -10,7 +10,7 @@ const TRANSIFEXRC = './.transifexrc',
             });
         }
         else {
-            Promise.resolve(rc);
+            return Promise.resolve(rc);
         }
     };
 
