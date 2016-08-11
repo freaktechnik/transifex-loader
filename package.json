@@ -2,9 +2,11 @@
   "name": "transifex-loader",
   "version": "1.0.1",
   "description": "Webpack loader to fetch imported translation files from transifex without the need to include them in your local source tree.",
-  "main": "index.js",
+  "main": "dist/transifex-loader.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/",
+    "build": "webpack"
   },
   "keywords": [
     "transifex",
@@ -18,7 +20,13 @@
     "transifex-api-es6": "^0.2.2"
   },
   "devDependencies": {
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-stage-2": "^6.13.0",
     "eslint": "^3.2.2",
-    "eslint-plugin-freaktechnik": "^1.0.1"
+    "eslint-plugin-freaktechnik": "^1.0.1",
+    "webpack": "^1.13.1"
   }
 }
