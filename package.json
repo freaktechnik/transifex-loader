@@ -18,6 +18,7 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
+    "eslint-plugin-freaktechnik": "^1.2.1",
     "loader-utils": "^0.2.15",
     "regenerator-runtime": "^0.9.5",
     "transifex-api-es6": "^0.2.2"

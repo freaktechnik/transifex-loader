@@ -10,10 +10,11 @@ const load = async (scope, cached) => {
     const options = loaderUtils.parseQuery(scope.query),
         loadFile = findFile(createLoadFile(scope.resolve.bind(scope), undefined, scope.addDependency.bind(scope)), scope.context);
     let resource;
+
     try {
         resource = await getResource(scope.resourcePath, loadFile, options.disableCache);
     }
-    catch() {
+    catch(e) {
         // resource is not known to the transifex config, bypass this loader.s
         return cached;
     }
