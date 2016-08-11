@@ -1,6 +1,7 @@
 import readRC from './lib/read-transifexrc';
 import { getResources } from './lib/read-txconfig';
 import { createLoadFile } from './lib/utils';
+import findFile from './lib/find-file';
 import TransifexAPI from 'transifex-api-es6';
 import loaderUtils from 'loader-utils';
 
@@ -13,7 +14,7 @@ const load = async (scope) => {
     let lang;
     const options = loaderUtils.parseQuery(scope.query),
         basePath = options.root || process.cwd(),
-        loadFile = createLoadFile(scope.resolve.bind(scope), basePath),
+        loadFile = findFile(createLoadFile(scope.resolve.bind(scope)), scope.context),
         resources = await getResources(loadFile),
         config = await readRC(loadFile),
         resource = resources.find((r) => {
@@ -21,7 +22,7 @@ const load = async (scope) => {
             if(rmatch.length) {
                 lang = rmatch[1];
             }
-            return rmatch.length;
+            return rmatch.length > 1;
         }),
         transifex = new TransifexAPI({
             user: config.username,

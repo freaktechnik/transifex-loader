@@ -1,7 +1,7 @@
 export const createLoadFile = (loadFile, basePath) => {
-    return (file) => {
+    return (file, base = basePath) => {
         return new Promise((resolve, reject) => {
-            loadFile(basePath, file, (error, data) => {
+            loadFile(base, file, (error, data) => {
                 if(error) {
                     reject(error);
                 }
