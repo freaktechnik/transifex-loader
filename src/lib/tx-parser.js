@@ -14,6 +14,14 @@ const SPECIFIC_PATH_KEY = "trans.",
                     // See if the file matches the file_filter
                     const rmatch = path.match(new RegExp(r.file_filter.replace(/<lang>/g, "([a-zA-Z-]+)")));
                     if(rmatch && rmatch.length) {
+                        if(rmatch.length > 2) {
+                            const firstLang = rmatch[1];
+                            for(let i = 2; i < rmatch.length; ++i) {
+                                if(rmatch[i] != firstLang) {
+                                    return false;
+                                }
+                            }
+                        }
                         lang = rmatch[1];
                         return true;
                     }

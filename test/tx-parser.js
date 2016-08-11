@@ -59,7 +59,7 @@ host = https://example.com
 [project.resource]
 source_file=locales/source/main.properties
 trans.rm=custom/roh/main.properties
-file_filter=locales/<lang>/main.properties
+file_filter=locales/<lang>/<lang>.properties
 source_lang=en`;
 
 const resolve = () => {
@@ -67,7 +67,7 @@ const resolve = () => {
 };
 
 test("getResource from file_filter", async (t) => {
-    const resource = await getResource("/full/path/to/locales/de/main.properties", resolve);
+    const resource = await getResource("/full/path/to/locales/de/de.properties", resolve);
     t.is(resource.project, "project");
     t.is(resource.name, "resource");
     t.is(resource.lang, "de");
@@ -75,7 +75,7 @@ test("getResource from file_filter", async (t) => {
 });
 
 test("getResource from trans.<lang>", async (t) => {
-    const resource = await getResource("/full/path/to/custom/roh/main.properties", resolve, false);
+    const resource = await getResource("/full/path/to/custom/roh/main.properties", resolve);
     t.is(resource.project, "project");
     t.is(resource.name, "resource");
     t.is(resource.lang, "rm");
@@ -90,8 +90,9 @@ test("getResource from source_file", async (t) => {
     t.true(resource.source);
 });
 
-test("getResource source lang without allowing it", (t) => {
-    return t.throws(getResource("/full/path/to/locales/en/main.properties", resolve));
+test("getResource source lang without allowing it", async (t) => {
+    await t.throws(getResource("/full/path/to/locales/en/en.properties", resolve, false));
+    await t.throws(getResource("/full/path/to/locales/source/main.properties", resolve));
 });
 
 test("getResource that's not registered", (t) => {
