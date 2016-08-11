@@ -12,7 +12,7 @@ fs.readdirSync('node_modules')
 });
 
 module.exports = {
-    entry: './src/index.js',
+    entry: ['./src/index.js'],
     target: 'node',
     output: {
         path: 'dist/',
@@ -28,7 +28,8 @@ module.exports = {
                 query: {
                     presets: ["es2015", "stage-2"],
                     plugins: [
-                        "transform-es2015-modules-commonjs"
+                        "transform-es2015-modules-commonjs",
+                        "transform-runtime"
                     ]
                 }
             }
