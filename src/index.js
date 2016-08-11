@@ -11,36 +11,45 @@ import loaderUtils from 'loader-utils';
 //TODO add dependency to the .tx/config and .transifexrc
 //TODO handle non-main project resources
 
-const load = async (scope) => {
-    let lang;
-    const options = loaderUtils.parseQuery(scope.query),
-        loadFile = findFile(createLoadFile(scope.resolve.bind(scope)), scope.context),
-        resources = await getResources(loadFile),
-        { main } = await readTXConfig(loadFile),
-        config = await readRC(loadFile),
-        resource = resources.find((r) => {
-            const rmatch = scope.resourcePath.match(new RegExp(r.file_filter.replace(/<lang>/g, "([a-zA-Z-]+)")));
-            if(rmatch && rmatch.length) {
-                lang = rmatch[1];
+const getResource = async (path, loadFile) => {
+        let lang;
+        const resources = await getResources(loadFile),
+            resource = resources.find((r) => {
+                const rmatch = path.match(new RegExp(r.file_filter.replace(/<lang>/g, "([a-zA-Z-]+)")));
+                if(rmatch && rmatch.length) {
+                    lang = rmatch[1];
+                }
+                return rmatch !== null;
+            });
+        resource.lang = lang;
+        return resource;
+    },
+    load = async (scope, cached) => {
+        const options = loaderUtils.parseQuery(scope.query),
+            loadFile = findFile(createLoadFile(scope.resolve.bind(scope)), scope.context),
+            resource = await getResource(scope.resourcePath, loadFile);
+
+        if(resource.lang == resource.source_lang && !options.disableCache) {
+            return cached;
+        }
+        else {
+            const { main } = await readTXConfig(loadFile),
+                config = await readRC(loadFile),
+                transifex = new TransifexAPI({
+                    user: config[main.host].username,
+                    password: config[main.host].password,
+                    projectName: resource.project,
+                    resourceName: resource.name
+                }),
+                output = await transifex.getResourceTranslation(resource.lang);
+
+            if(options.store === undefined || options.store) {
+                writeFile(scope.resourcePath, output);
             }
-            return rmatch !== null;
-        }),
-        transifex = new TransifexAPI({
-            user: config[main.host].username,
-            password: config[main.host].password,
-            projectName: resource.project,
-            resourceName: resource.name
-        }),
-        output = await transifex.getResourceTranslation(lang);
 
-    //TODO? Write it to the output (should be another loader's job IMO)
-
-    if(options.store === undefined || options.store) {
-        writeFile(scope.resourcePath, output);
-    }
-
-    return output;
-};
+            return output;
+        }
+    };
 
 module.exports = function(contents) {
     const callback = this.async();
@@ -49,7 +58,7 @@ module.exports = function(contents) {
         return contents;
     }
 
-    load(this).then((output) => {
+    load(this, contents).then((output) => {
         callback(null, output);
     }).catch((e) => {
         callback(e);
