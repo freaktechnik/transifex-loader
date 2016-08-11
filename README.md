@@ -20,4 +20,4 @@ system and fetches it from transifex, too.
 
  - Requires credentials to be in `.transifexrc`.
  - Requires the project to be on transifex.com but does not complain about it.
- - Ignores `minimum_prec`.
+ - Ignores `minimum_perc`.
