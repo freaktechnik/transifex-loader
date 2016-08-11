@@ -13,7 +13,7 @@ const load = async (scope) => {
 
     let lang;
     const options = loaderUtils.parseQuery(scope.query),
-        basePath = options.root || path.dirname(require.main.filename),
+        basePath = options.root || path.dirname(__non_webpack_require__.main.filename),
         loadFile = createLoadFile(scope.resolve.bind(scope), basePath),
         resources = await getResources(loadFile),
         config = await readRC(loadFile),
