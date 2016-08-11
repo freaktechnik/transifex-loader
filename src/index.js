@@ -8,8 +8,8 @@ import loaderUtils from 'loader-utils';
 
 const load = async (scope, cached) => {
     const options = loaderUtils.parseQuery(scope.query),
-        loadFile = findFile(createLoadFile(scope.resolve.bind(scope), undefined, scope.addDependency.bind(scope)), scope.context),
-        resource;
+        loadFile = findFile(createLoadFile(scope.resolve.bind(scope), undefined, scope.addDependency.bind(scope)), scope.context);
+    let resource;
     try {
         resource = await getResource(scope.resourcePath, loadFile, options.disableCache);
     }
@@ -17,26 +17,23 @@ const load = async (scope, cached) => {
         // resource is not known to the transifex config, bypass this loader.s
         return cached;
     }
+    const { main } = await readTXConfig(loadFile),
+        config = await readRC(loadFile),
+        transifex = new TransifexAPI({
+            user: config[main.host].username,
+            password: config[main.host].password,
+            projectName: resource.project,
+            resourceName: resource.name
+        });
 
-    else {
-        const { main } = await readTXConfig(loadFile),
-            config = await readRC(loadFile),
-            transifex = new TransifexAPI({
-                user: config[main.host].username,
-                password: config[main.host].password,
-                projectName: resource.project,
-                resourceName: resource.name
-            });
+    resource.lang = getMappedLang(resource.lang, resource.lang_map, main.lang_map);
+    let output = await transifex._send(`/resource/${transifex.resourceName}/translation/${resource.lang}`);
 
-        resource.lang = getMappedLang(resource.lang, resource.lang_map, main.lang_map);
-        let output = await transifex._send(`/resource/${transifex.resourceName}/translation/${resource.lang}`);
-
-        if(options.store === undefined || options.store) {
-            await writeFile(scope.resourcePath, output);
-        }
-
-        return output;
+    if(options.store === undefined || options.store) {
+        await writeFile(scope.resourcePath, output);
     }
+
+    return output;
 };
 
 module.exports = function(contents) {
