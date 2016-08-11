@@ -1,6 +1,6 @@
 {
   "name": "transifex-loader",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "Webpack loader to fetch imported translation files from transifex without the need to include them in your local source tree.",
   "main": "dist/transifex-loader.js",
   "scripts": {
