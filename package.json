@@ -1,6 +1,6 @@
 {
   "name": "transifex-loader",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Webpack loader to fetch imported translation files from transifex without the need to include them in your local source tree.",
   "main": "dist/transifex-loader.js",
   "scripts": {
@@ -46,14 +46,17 @@
   "ava": {
     "babel": "inherit",
     "require": [
-        "babel-register"
+      "babel-register"
     ]
   },
   "babel": {
-    "presets": ["es2015", "stage-2"],
+    "presets": [
+      "es2015",
+      "stage-2"
+    ],
     "plugins": [
-        "transform-es2015-modules-commonjs",
-        "transform-runtime"
+      "transform-es2015-modules-commonjs",
+      "transform-runtime"
     ]
   }
 }
