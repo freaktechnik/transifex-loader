@@ -18,9 +18,6 @@ const load = async (scope, cached) => {
         return cached;
     }
 
-    if(resource.source && !options.disableCache) {
-        return cached;
-    }
     else {
         const { main } = await readTXConfig(loadFile),
             config = await readRC(loadFile),
