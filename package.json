@@ -1,0 +1,24 @@
+{
+  "name": "transifex-loader",
+  "version": "1.0.1",
+  "description": "Webpack loader to fetch imported translation files from transifex without the need to include them in your local source tree.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "transifex",
+    "webpack",
+    "loader"
+  ],
+  "author": "Martin Giger (https://humanoids.be)",
+  "license": "MIT",
+  "dependencies": {
+    "loader-utils": "^0.2.15",
+    "transifex-api-es6": "^0.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.2.2",
+    "eslint-plugin-freaktechnik": "^1.0.1"
+  }
+}
