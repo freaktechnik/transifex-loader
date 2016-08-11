@@ -19,7 +19,7 @@ const load = async (scope) => {
         { main } = await readTXConfig(loadFile),
         config = await readRC(loadFile),
         resource = resources.find((r) => {
-            const rmatch = scope.resourcePath.match(new RegExp(r.file_filter.replace(/<path>/g, "([a-zA-Z-]+)")));
+            const rmatch = scope.resourcePath.match(new RegExp(r.file_filter.replace(/<lang>/g, "([a-zA-Z-]+)")));
             if(rmatch && rmatch.length) {
                 lang = rmatch[1];
             }
