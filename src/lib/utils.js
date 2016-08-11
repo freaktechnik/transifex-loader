@@ -12,13 +12,16 @@ const promisedLoadFile = (loadFile, base, file) => {
             });
         });
     },
-    promisedFs = (path) => {
+    promisedFs = (path, addDependency) => {
         return new Promise((resolve, reject) => {
             fs.readFile(path, 'utf-8', (error, data) => {
                 if(error) {
                     reject(error);
                 }
                 else {
+                    if(addDependency) {
+                        addDependency(path);
+                    }
                     resolve(data);
                 }
             });
@@ -36,9 +39,9 @@ const promisedLoadFile = (loadFile, base, file) => {
             });
         });
     },
-    createLoadFile = (loadFile, basePath) => {
+    createLoadFile = (loadFile, basePath, addDependency) => {
         return (file, base = basePath) => {
-            return promisedLoadFile(loadFile, base, file).then(promisedFs);
+            return promisedLoadFile(loadFile, base, file).then((path) => promisedFs(path, addDependency));
         };
     };
 

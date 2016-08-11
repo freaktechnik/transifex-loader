@@ -26,7 +26,7 @@ const getResource = async (path, loadFile) => {
     },
     load = async (scope, cached) => {
         const options = loaderUtils.parseQuery(scope.query),
-            loadFile = findFile(createLoadFile(scope.resolve.bind(scope)), scope.context),
+            loadFile = findFile(createLoadFile(scope.resolve.bind(scope), undefined, scope.addDependency.bind(scope)), scope.context),
             resource = await getResource(scope.resourcePath, loadFile);
 
         if(resource.lang == resource.source_lang && !options.disableCache) {
