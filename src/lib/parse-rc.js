@@ -7,7 +7,7 @@ const parseRC = (content) => {
     for(let l = 0; l < lines.length; ++l) {
         line = lines[l];
         if(line.startsWith("[")) {
-            currentSection = line.substr(1, -1);
+            currentSection = line.substr(1, line.length - 2);
             sections[currentSection] = {};
         }
         else if(line.includes("=")) {

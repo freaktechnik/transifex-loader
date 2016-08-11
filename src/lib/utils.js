@@ -14,7 +14,7 @@ const promisedLoadFile = (loadFile, base, file) => {
     },
     promisedFs = (path) => {
         return new Promise((resolve, reject) => {
-            fs.readFile(path, (error, data) => {
+            fs.readFile(path, 'utf-8', (error, data) => {
                 if(error) {
                     reject(error);
                 }

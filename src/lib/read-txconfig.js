@@ -1,8 +1,18 @@
 import parseRC from './parse-rc';
 
+let txconfig;
+
 const TXCONFIG = './.tx/config',
     readTXConfig = (resolve) => {
-        return resolve(TXCONFIG).then(parseRC);
+        if(!txconfig) {
+            return resolve(TXCONFIG).then(parseRC).then((c) => {
+                txconfig = c;
+                return c;
+            });
+        }
+        else {
+            return Promise.resolve(txconfig);
+        }
     },
     getResources = (resolve) => {
         return readTXConfig(resolve).then((config) => {
