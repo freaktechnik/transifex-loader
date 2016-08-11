@@ -29,6 +29,7 @@ const load = async (scope, cached) => {
 
     resource.lang = getMappedLang(resource.lang, resource.lang_map, main.lang_map);
     let output = await transifex._send(`/resource/${transifex.resourceName}/translation/${resource.lang}`);
+    output = JSON.parse(output).content;
 
     if(options.store === undefined || options.store) {
         await writeFile(scope.resourcePath, output);
