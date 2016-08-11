@@ -48,7 +48,9 @@ module.exports = function(contents) {
         return contents;
     }
 
-    load(this).then(callback).catch((e) => {
-        this.emitError(e);
+    load(this).then((output) => {
+        callback(null, output);
+    }).catch((e) => {
+        callback(e);
     });
 };
