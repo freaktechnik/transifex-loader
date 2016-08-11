@@ -10,10 +10,8 @@ import loaderUtils from 'loader-utils';
 //TODO handle other placeholders than <lang>
 
 const load = async (scope) => {
-
     let lang;
     const options = loaderUtils.parseQuery(scope.query),
-        basePath = options.root || process.cwd(),
         loadFile = findFile(createLoadFile(scope.resolve.bind(scope)), scope.context),
         resources = await getResources(loadFile),
         config = await readRC(loadFile),
