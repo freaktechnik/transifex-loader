@@ -24,10 +24,22 @@ const promisedLoadFile = (loadFile, base, file) => {
             });
         });
     },
+    writeFile = (path, content) => {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(path, content, 'utf-8', (error) => {
+                if(error) {
+                    reject(error);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
+    },
     createLoadFile = (loadFile, basePath) => {
         return (file, base = basePath) => {
             return promisedLoadFile(loadFile, base, file).then(promisedFs);
         };
     };
 
-export { createLoadFile };
+export { createLoadFile, writeFile };

@@ -1,6 +1,6 @@
 import readRC from './lib/read-transifexrc';
 import { getResources, readTXConfig } from './lib/read-txconfig';
-import { createLoadFile } from './lib/utils';
+import { createLoadFile, writeFile } from './lib/utils';
 import findFile from './lib/find-file';
 import TransifexAPI from 'transifex-api-es6';
 import loaderUtils from 'loader-utils';
@@ -36,7 +36,7 @@ const load = async (scope) => {
     //TODO? Write it to the output (should be another loader's job IMO)
 
     if(options.store === undefined || options.store) {
-        scope.emitFile(scope.resourcePath, output);
+        writeFile(scope.resourcePath, output);
     }
 
     return output;
