@@ -9,37 +9,46 @@ import loaderUtils from 'loader-utils';
 //TODO handle trans.
 //TODO handle other placeholders than <lang>
 
-module.exports = async function() {
-    this.cacheable(true);
+const load = async (scope) => {
 
     let lang;
-    try {
-        const callback = this.async(),
-            options = loaderUtils.parseQuery(this.query),
-            basePath = options.root || path.dirname(require.main.filename),
-            loadFile = createLoadFile(this.resolve.bind(this), basePath),
-            resources = await getResources(loadFile),
-            config = await readRC(loadFile),
-            resource = resources.find((r) => {
-                const rmatch = this.resourcePath.match(new RegExp(r.file_filter.replace(/<path>/g, "([a-zA-Z-]+)")));
-                if(rmatch.length) {
-                    lang = rmatch[1];
-                }
-                return rmatch.length;
-            }),
-            transifex = new TransifexAPI({
-                user: config.username,
-                password: config.password,
-                projectName: resource.project,
-                resourceName: resource.name
-            }),
-            output = await transifex.getResourceTranslation(lang);
-
-        callback(output);
-    }
-    catch(e) {
-        this.emitError(e);
-    }
+    const options = loaderUtils.parseQuery(scope.query),
+        basePath = options.root || path.dirname(require.main.filename),
+        loadFile = createLoadFile(scope.resolve.bind(scope), basePath),
+        resources = await getResources(loadFile),
+        config = await readRC(loadFile),
+        resource = resources.find((r) => {
+            const rmatch = scope.resourcePath.match(new RegExp(r.file_filter.replace(/<path>/g, "([a-zA-Z-]+)")));
+            if(rmatch.length) {
+                lang = rmatch[1];
+            }
+            return rmatch.length;
+        }),
+        transifex = new TransifexAPI({
+            user: config.username,
+            password: config.password,
+            projectName: resource.project,
+            resourceName: resource.name
+        }),
+        output = await transifex.getResourceTranslation(lang);
 
     //TODO? Write it to the output (should be another loader's job IMO)
+
+    if(options.store !== false) {
+        scope.emitFile(scope.resourcePath, output);
+    }
+
+    return output;
+};
+
+module.exports = function(contents) {
+    const callback = this.async();
+    this.cacheable(true);
+    if(!callback) {
+        return contents;
+    }
+
+    load(this).then(callback).catch((e) => {
+        this.emitError(e);
+    });
 };
