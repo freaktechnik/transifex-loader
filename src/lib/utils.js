@@ -22,10 +22,12 @@ const promisedLoadFile = (loadFile, base, file) => {
                     resolve(data);
                 }
             });
-        }
+        });
     },
     createLoadFile = (loadFile, basePath) => {
-    return (file, base = basePath) => {
-        return promisedLoadFile(loadFile, base, file).then(promisedFs);
+        return (file, base = basePath) => {
+            return promisedLoadFile(loadFile, base, file).then(promisedFs);
+        };
     };
-};
+
+export { createLoadFile };
