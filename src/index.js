@@ -34,7 +34,7 @@ const load = async (scope) => {
 
     //TODO? Write it to the output (should be another loader's job IMO)
 
-    if(options.store !== false) {
+    if(options.store === undefined || options.store) {
         scope.emitFile(scope.resourcePath, output);
     }
 

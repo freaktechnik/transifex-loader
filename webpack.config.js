@@ -16,7 +16,7 @@ module.exports = {
     target: 'node',
     output: {
         path: 'dist/',
-        filename: 'transifex-loader',
+        filename: 'transifex-loader.js',
         libraryTarget: 'commonjs2'
     },
     module: {
