@@ -1,7 +1,6 @@
 import readRC from './lib/read-transifexrc';
 import { getResources } from './lib/read-txconfig';
 import { createLoadFile } from './lib/utils';
-import path from 'path';
 import TransifexAPI from 'transifex-api-es6';
 import loaderUtils from 'loader-utils';
 
@@ -13,7 +12,7 @@ const load = async (scope) => {
 
     let lang;
     const options = loaderUtils.parseQuery(scope.query),
-        basePath = options.root || path.dirname(__non_webpack_require__.main.filename),
+        basePath = options.root || process.cwd(),
         loadFile = createLoadFile(scope.resolve.bind(scope), basePath),
         resources = await getResources(loadFile),
         config = await readRC(loadFile),
