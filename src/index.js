@@ -15,7 +15,7 @@ const load = async (scope, cached) => {
         resource = await getResource(scope.resourcePath, loadFile, options.disableCache);
     }
     catch(e) {
-        // resource is not known to the transifex config, bypass this loader.s
+        // resource is not known to the transifex config, bypass this loader.
         return cached;
     }
     const { main } = await readTXConfig(loadFile),
