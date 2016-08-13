@@ -20,6 +20,7 @@
   "dependencies": {
     "eslint-plugin-freaktechnik": "^1.2.1",
     "loader-utils": "^0.2.15",
+    "promisify-call": "^1.0.0",
     "regenerator-runtime": "^0.9.5",
     "transifex-api-es6": "^0.2.2"
   },
@@ -27,6 +28,7 @@
     "ava": "^0.16.0",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.4",
+    "babel-plugin-module-rewrite": "0.0.2",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
     "babel-plugin-transform-runtime": "^6.12.0",
     "babel-preset-es2015": "^6.13.2",
@@ -35,6 +37,7 @@
     "eslint": "^3.2.2",
     "eslint-plugin-freaktechnik": "^1.0.1",
     "nyc": "^7.1.0",
+    "random-string": "^0.1.2",
     "webpack": "^1.13.1"
   },
   "bugs": {
@@ -46,9 +49,7 @@
   },
   "ava": {
     "babel": "inherit",
-    "require": [
-      "babel-register"
-    ]
+    "require": "babel-register"
   },
   "babel": {
     "presets": [
@@ -57,7 +58,8 @@
     ],
     "plugins": [
       "transform-es2015-modules-commonjs",
-      "transform-runtime"
+      "transform-runtime",
+      ["module-rewrite", { "replaceFunc": "./test/_rewrite-modules.js" }]
     ]
   }
 }

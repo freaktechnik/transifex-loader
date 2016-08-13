@@ -1,43 +1,6 @@
 import test from 'ava';
 import transifexLoader from '../src/index';
-import path from 'path';
-
-const getMockEnv = (failResolve = false) => {
-    return {
-        async() {
-            let extractedResolve;
-            this._promise = new Promise((resolve, reject) => {
-                extractedResolve = (error, result) => {
-                    if(error) {
-                        reject(error);
-                    }
-                    else {
-                        resolve(result);
-                    }
-                };
-            });
-            return extractedResolve;
-        },
-        cacheable(isCacheable) {
-            this._cacheable = isCacheable;
-        },
-        query: "",
-        resourcePath: "",
-        context: "",
-        resolve(base, file, callback) {
-            if(failResolve) {
-                callback("error");
-            }
-            else {
-                callback(null, path.join(base, file));
-            }
-        },
-        _dependencies: [],
-        addDependency(dep) {
-            this._dependencies.push(dep);
-        }
-    };
-};
+import { getMockEnv } from './_mock-loader-env';
 
 test("Bypasses if it can't be async", (t) => {
     const content = "foo bar";
@@ -57,10 +20,11 @@ test("Bypasses if it can't be async", (t) => {
 
 test("fail find file bypasses", async (t) => {
     const content = "foo bar";
-    const mockEnv = getMockEnv(true);
+    const mockEnv = await getMockEnv(true);
     transifexLoader.call(mockEnv, content);
     const result = await mockEnv._promise;
     t.is(result, content);
     t.true(mockEnv._cacheable);
+    t.truthy(mockEnv._error);
 });
 

@@ -1,47 +1,20 @@
 import fs from 'fs';
+import promisify from 'promisify-call';
 
-const promisedLoadFile = (loadFile, base, file) => {
-        return new Promise((resolve, reject) => {
-            loadFile(base, file, (error, path) => {
-                if(error) {
-                    reject(error);
-                }
-                else {
-                    resolve(path);
-                }
-            });
-        });
-    },
-    promisedFs = (path, addDependency) => {
-        return new Promise((resolve, reject) => {
-            fs.readFile(path, 'utf-8', (error, data) => {
-                if(error) {
-                    reject(error);
-                }
-                else {
-                    if(addDependency) {
-                        addDependency(path);
-                    }
-                    resolve(data);
-                }
-            });
+const promisedFs = (path, addDependency) => {
+        return promisify(fs, fs.readFile, path, 'utf-8').then((data) => {
+            if(addDependency) {
+                addDependency(path);
+            }
+            return data;
         });
     },
     writeFile = (path, content) => {
-        return new Promise((resolve, reject) => {
-            fs.writeFile(path, content, 'utf-8', (error) => {
-                if(error) {
-                    reject(error);
-                }
-                else {
-                    resolve();
-                }
-            });
-        });
+        return promisify(fs, fs.writeFile, path, content, 'utf-8');
     },
     createLoadFile = (loadFile, basePath, addDependency) => {
         return (file, base = basePath) => {
-            return promisedLoadFile(loadFile, base, file).then((path) => promisedFs(path, addDependency));
+            return promisify(null, loadFile, base, file).then((path) => promisedFs(path, addDependency));
         };
     };
 

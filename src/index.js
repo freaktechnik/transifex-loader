@@ -1,6 +1,6 @@
 import readRC from './lib/read-transifexrc';
 import { readTXConfig } from './lib/read-txconfig';
-import { getResource, getMappedLang } from './lib/tx-parser';
+import { getResource, getMappedLang, NoMatchingResourceError } from './lib/tx-parser';
 import { createLoadFile, writeFile } from './lib/utils';
 import findFile from './lib/find-file';
 import TransifexAPI from 'transifex-api-es6';
@@ -15,9 +15,16 @@ const load = async (scope, cached) => {
         resource = await getResource(scope.resourcePath, loadFile, options.disableCache);
     }
     catch(e) {
+        if(e != NoMatchingResourceError) {
+            scope.emitError(e);
+        }
+        else {
+            scope.emitWarning(`Could not find any transifex resource for ${scope.resourcePath}.`);
+        }
         // resource is not known to the transifex config, bypass this loader.
         return cached;
     }
+
     const { main } = await readTXConfig(loadFile),
         config = await readRC(loadFile),
         transifex = new TransifexAPI({
@@ -28,7 +35,7 @@ const load = async (scope, cached) => {
         });
 
     resource.lang = getMappedLang(resource.lang, resource.lang_map, main.lang_map);
-    let output = await transifex._send(`/resource/${transifex.resourceName}/translation/${resource.lang}`);
+    let output = await transifex._send(`/resource/${resource.name}/translation/${resource.lang}`);
     output = JSON.parse(output).content;
 
     if(options.store === undefined || options.store) {

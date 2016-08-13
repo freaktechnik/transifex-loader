@@ -1,6 +1,7 @@
 import { getResources } from './read-txconfig';
 
 const SPECIFIC_PATH_KEY = "trans.",
+    NoMatchingResourceError = "No such resource",
     getResource = async (path, loadFile, matchSourceLang = false) => {
         let lang;
         const resources = await getResources(loadFile),
@@ -39,7 +40,7 @@ const SPECIFIC_PATH_KEY = "trans.",
                 return false;
             });
         if(!resource || (!matchSourceLang && resource.source_lang == lang)) {
-            throw "No such resource";
+            throw NoMatchingResourceError;
         }
         resource.lang = lang;
         resource.source = lang == resource.source_lang;
@@ -67,4 +68,4 @@ const SPECIFIC_PATH_KEY = "trans.",
         return lang;
     };
 
-export { getResource, getMappedLang, parseLanguageMap };
+export { getResource, getMappedLang, parseLanguageMap, NoMatchingResourceError };

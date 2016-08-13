@@ -1,5 +1,7 @@
 import test from 'ava';
-import { getMappedLang, parseLanguageMap, getResource } from '../src/lib/tx-parser';
+import { getMappedLang, parseLanguageMap, getResource, NoMatchingResourceError } from '../src/lib/tx-parser';
+
+const checkError = (e) => e == NoMatchingResourceError;
 
 test("parseLanguageMap from string only", (t) => {
     const languageMap = "en : en-US, sr@latin:sr_latin, el:el-GR";
@@ -91,15 +93,15 @@ test("getResource from source_file", async (t) => {
 });
 
 test("getResource source lang without allowing it", async (t) => {
-    await t.throws(getResource("/full/path/to/locales/en/en.properties", resolve, false));
-    await t.throws(getResource("/full/path/to/locales/source/main.properties", resolve));
+    await t.throws(getResource("/full/path/to/locales/en/en.properties", resolve, false), checkError);
+    await t.throws(getResource("/full/path/to/locales/source/main.properties", resolve), checkError);
 });
 
 test("getResource that's not registered", (t) => {
-    return t.throws(getResource("/full/path/to/nothing.po", resolve));
+    return t.throws(getResource("/full/path/to/nothing.po", resolve), checkError);
 });
 
 test("getResource only matches if it's the end of the path", (t) => {
-    return t.throws(getResource("/wrong/path/to/locales/en/main.properties/real/translation.json", resolve));
+    return t.throws(getResource("/wrong/path/to/locales/en/main.properties/real/translation.json", resolve), checkError);
 });
 

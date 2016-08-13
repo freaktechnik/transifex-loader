@@ -2,6 +2,7 @@ import test from 'ava';
 import * as utils from '../src/lib/utils';
 import os from 'os';
 import path from 'path';
+import { deleteFile } from './_cleanup-helper';
 
 test("createLoadFile returns a function", (t) => {
     t.is(typeof utils.createLoadFile(), "function");
@@ -49,6 +50,8 @@ test("write file and read it", async (t) => {
 
     const readContents = await loadFile(fileName);
     t.is(readContents, fileContents);
+
+    await deleteFile(filePath);
 });
 
 test("unwritable file", (t) => {
