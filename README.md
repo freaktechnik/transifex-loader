@@ -6,6 +6,11 @@ configuration via `.transifexrc` and `.tx/config` in the same format as the
 official `tx` tool. The configuration files are searched from the directory
 the loaded file is in up to the system root.
 
+## Installation
+```bash
+npm install --save-dev transifex-loader
+```
+
 ## Query options
 
 ### `store`
