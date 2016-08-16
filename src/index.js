@@ -41,7 +41,7 @@ const load = async (scope, cached) => {
             resourceName: resource.name
         });
 
-    resource.lang = txc.getMappedLang(resource.lang, resource);
+    resource.lang = await txc.getMappedLang(resource.lang, resource);
     let output = await transifex._send(`/resource/${resource.name}/translation/${resource.lang}`);
     output = JSON.parse(output).content;
 

@@ -34,6 +34,11 @@ hostname=https://example.com`),
         ]);
     }
     return {
+        _wasSuccessful() {
+            if(this._error) {
+                throw this._error;
+            }
+        },
         async() {
             let extractedResolve;
             this._promise = new Promise((resolve, reject) => {

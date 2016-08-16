@@ -36,6 +36,8 @@ test("Didn't find resource but loaded config", async (t) => {
 
     transifexLoader.call(mockEnv, "test");
     const result = await mockEnv._promise;
+    mockEnv._wasSuccessful();
+
     t.is(result, "test");
 
     t.falsy(mockEnv._error);
@@ -49,6 +51,8 @@ test("found resource without writing it", async (t) => {
 
     transifexLoader.call(mockEnv, "foo bar");
     const result = await mockEnv._promise;
+    mockEnv._wasSuccessful();
+
     t.is(result, "bar baz");
 
     const diskContents = await fs.readFile(mockEnv.resourcePath, 'utf-8');
@@ -67,6 +71,8 @@ test("found resource and wrote it back to disk", async (t) => {
 
     transifexLoader.call(mockEnv, "foo bar");
     const result = await mockEnv._promise;
+    mockEnv._wasSuccessful();
+
     t.is(result, "bar baz");
 
     const diskContents = await fs.readFile(mockEnv.resourcePath, 'utf-8');
