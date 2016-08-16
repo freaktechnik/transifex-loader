@@ -1,4 +1,4 @@
-import { NoMatchingResourceError } from 'transifex-config/lib/errors';
+import { NoMatchingResourceError, MatchesSourceError } from 'transifex-config/lib/errors';
 import TransifexConfig from 'transifex-config';
 import { TRANSIFEXRC, TXCONFIG } from 'transifex-config/lib/load-config';
 import findFile from './lib/find-file';
@@ -22,6 +22,9 @@ const load = async (scope, cached) => {
     catch(e) {
         if(e instanceof NoMatchingResourceError) {
             scope.emitWarning(`Could not find any transifex resource for ${scope.resourcePath}.`);
+            return cached;
+        }
+        else if(e instanceof MatchesSourceError) {
             return cached;
         }
         else {
