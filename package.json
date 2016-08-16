@@ -18,10 +18,9 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
-    "eslint-plugin-freaktechnik": "^1.2.1",
+    "babel-runtime": "^6.11.6",
     "loader-utils": "^0.2.15",
     "mz": "^2.4.0",
-    "regenerator-runtime": "^0.9.5",
     "transifex-api-es6": "^0.2.2",
     "transifex-config": "^2.0.0"
   },
@@ -36,10 +35,11 @@
     "babel-preset-stage-2": "^6.13.0",
     "codecov": "^1.0.1",
     "eslint": "^3.2.2",
-    "eslint-plugin-freaktechnik": "^1.0.1",
+    "eslint-plugin-freaktechnik": "^1.2.1",
     "nyc": "^8.0.0",
     "random-string": "^0.1.2",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-node-externals": "^1.3.3"
   },
   "bugs": {
     "url": "https://github.com/freaktechnik/transifex-loader/issues"

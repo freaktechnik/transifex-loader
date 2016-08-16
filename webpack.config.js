@@ -1,15 +1,6 @@
-var fs = require("fs");
+var nodeExternals = require("webpack-node-externals");
 
 var nodeModules = {};
-
-// This is to filter out node_modules as they shouldn't be part of the output.
-fs.readdirSync('node_modules')
-  .filter(function(x) {
-    return ['.bin'].indexOf(x) === -1;
-  })
-  .forEach(function(mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-});
 
 module.exports = {
     entry: ['./src/index.js'],
@@ -36,5 +27,5 @@ module.exports = {
             }
         ]
     },
-    externals: nodeModules
+    externals: [nodeExternals()]
 };
