@@ -20,9 +20,10 @@
   "dependencies": {
     "eslint-plugin-freaktechnik": "^1.2.1",
     "loader-utils": "^0.2.15",
-    "promisify-call": "^1.0.0",
+    "mz": "^2.4.0",
     "regenerator-runtime": "^0.9.5",
-    "transifex-api-es6": "^0.2.2"
+    "transifex-api-es6": "^0.2.2",
+    "transifex-config": "^1.0.0"
   },
   "devDependencies": {
     "ava": "^0.16.0",

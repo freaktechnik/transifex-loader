@@ -1,20 +1,17 @@
 import path from 'path';
 import os from 'os';
-import fs from 'fs';
-import promisify from 'promisify-call';
+import fs from 'mz/fs';
 import randomString from 'random-string';
-import { writeFile } from '../src/lib/utils';
-import { deleteFile } from './_cleanup-helper';
 
-const getMockEnv = async (failResolve = false, query = "", generateResource = true, resourceName = "resource") => {
+const getMockEnv = async (query = "", generateResource = true, resourceName = "resource", noFiles = false) => {
     let context = "";
-    if(!failResolve) {
+    if(!noFiles) {
         context = path.join(os.tmpdir(), "transifex-loader-test-" + randomString({
             length: 12
         }));
 
-        await promisify(fs, fs.mkdir, context);
-        await promisify(fs, fs.mkdir, path.join(context, ".tx"));
+        await fs.mkdir(context);
+        await fs.mkdir(path.join(context, '.tx'));
 
         let txconfig = `[main]
 host=https://example.com`;
@@ -28,16 +25,15 @@ source_lang=source.file`;
         }
 
         await Promise.all([
-            writeFile(path.join(context, '.transifexrc'), `[https://example.com]
+            fs.writeFile(path.join(context, '.transifexrc'), `[https://example.com]
 username=foo
 password=bar
 hostname=https://example.com`),
-            writeFile(path.join(context, '.tx/config'), txconfig),
-            writeFile(path.join(context, 'de.file'), "foo bar")
+            fs.writeFile(path.join(context, '.tx/config'), txconfig),
+            fs.writeFile(path.join(context, 'de.file'), "foo bar")
         ]);
     }
     return {
-        _failResolve: failResolve,
         async() {
             let extractedResolve;
             this._promise = new Promise((resolve, reject) => {
@@ -58,14 +54,6 @@ hostname=https://example.com`),
         resourcePath: path.join(context, 'de.file'),
         context,
         query,
-        resolve(base, file, callback) {
-            if(failResolve) {
-                callback("error");
-            }
-            else {
-                callback(null, path.join(base, file));
-            }
-        },
         _dependencies: [],
         addDependency(dep) {
             this._dependencies.push(dep);
@@ -80,16 +68,14 @@ hostname=https://example.com`),
 };
 
 const cleanUpMockEnv = async (mockEnv) => {
-    if(!mockEnv._failResolve) {
-        await Promise.all([
-            deleteFile(path.join(mockEnv.context, '.tx/config')),
-            deleteFile(path.join(mockEnv.context, '.transifexrc')),
-            deleteFile(mockEnv.resourcePath)
-        ]);
+    await Promise.all([
+        fs.unlink(path.join(mockEnv.context, '.tx/config')),
+        fs.unlink(path.join(mockEnv.context, '.transifexrc')),
+        fs.unlink(mockEnv.resourcePath)
+    ]);
 
-        await promisify(fs, fs.rmdir, path.join(mockEnv.context, '.tx'));
-        await promisify(fs, fs.rmdir, mockEnv.context);
-    }
+    await fs.rmdir(path.join(mockEnv.context, '.tx'));
+    await fs.rmdir(mockEnv.context);
 };
 
 export { getMockEnv, cleanUpMockEnv };

@@ -1,18 +1,19 @@
 import path from 'path';
+import fs from 'mz/fs';
 
-const find = (loadFile, file, start = './') => {
+const find = (start, file) => {
     const dir = path.resolve(start);
-    return loadFile(file, dir).catch(() => {
+    return fs.stat(path.join(dir, file)).then(() => {
+        return dir;
+    }).catch(() => {
         const nextDir = path.resolve(dir, '..');
         if(nextDir == dir) {
             throw "Could not find " + file;
         }
         else {
-            return find(loadFile, file, nextDir);
+            return find(nextDir, file);
         }
     });
 };
 
-export default (loadFile, basePath) => {
-    return (file, base = basePath) => find(loadFile, file, base);
-};
+export default find;

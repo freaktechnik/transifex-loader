@@ -1,32 +1,36 @@
-import readRC from './lib/read-transifexrc';
-import { readTXConfig } from './lib/read-txconfig';
-import { getResource, getMappedLang, NoMatchingResourceError } from './lib/tx-parser';
-import { createLoadFile, writeFile } from './lib/utils';
+import { NoMatchingResourceError } from 'transifex-config/lib/errors';
+import TransifexConfig from 'transifex-config';
+import { TRANSIFEXRC, TXCONFIG } from 'transifex-config/lib/load-config';
 import findFile from './lib/find-file';
 import TransifexAPI from 'transifex-api-es6';
 import loaderUtils from 'loader-utils';
+import path from 'path';
+import fs from 'mz/fs';
 
 const load = async (scope, cached) => {
     const options = loaderUtils.parseQuery(scope.query),
-        loadFile = findFile(createLoadFile(scope.resolve.bind(scope), undefined, scope.addDependency.bind(scope)), scope.context);
+        basePath = await findFile(scope.context, TRANSIFEXRC),
+        txc = new TransifexConfig(basePath);
     let resource;
 
+    scope.addDependency(path.join(basePath, TXCONFIG));
+    scope.addDependency(path.join(basePath, TRANSIFEXRC));
+
     try {
-        resource = await getResource(scope.resourcePath, loadFile, options.disableCache);
+        resource = await txc.getResource(scope.resourcePath, options.disableCache);
     }
     catch(e) {
-        if(e != NoMatchingResourceError) {
-            scope.emitError(e);
+        if(e instanceof NoMatchingResourceError) {
+            scope.emitWarning(`Could not find any transifex resource for ${scope.resourcePath}.`);
+            return cached;
         }
         else {
-            scope.emitWarning(`Could not find any transifex resource for ${scope.resourcePath}.`);
+            throw e;
         }
-        // resource is not known to the transifex config, bypass this loader.
-        return cached;
     }
 
-    const { main } = await readTXConfig(loadFile),
-        config = await readRC(loadFile),
+    const { main } = await txc.getConfig(),
+        config = await txc.getRC(),
         transifex = new TransifexAPI({
             user: config[main.host].username,
             password: config[main.host].password,
@@ -34,12 +38,12 @@ const load = async (scope, cached) => {
             resourceName: resource.name
         });
 
-    resource.lang = getMappedLang(resource.lang, resource.lang_map, main.lang_map);
+    resource.lang = txc.getMappedLang(resource.lang, resource);
     let output = await transifex._send(`/resource/${resource.name}/translation/${resource.lang}`);
     output = JSON.parse(output).content;
 
     if(options.store === undefined || options.store) {
-        await writeFile(scope.resourcePath, output);
+        await fs.writeFile(scope.resourcePath, output, 'utf-8');
     }
 
     return output;
@@ -55,6 +59,7 @@ module.exports = function(contents) {
     load(this, contents).then((output) => {
         callback(null, output);
     }).catch((e) => {
-        callback(e);
+        this.emitError(e);
+        callback(null, contents);
     });
 };
