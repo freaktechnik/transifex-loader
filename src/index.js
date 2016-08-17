@@ -42,8 +42,7 @@ const load = async (scope, cached) => {
         });
 
     resource.lang = await txc.getMappedLang(resource.lang, resource);
-    let output = await transifex._send(`/resource/${resource.name}/translation/${resource.lang}`);
-    output = JSON.parse(output).content;
+    const output = await transifex.getResourceTranslation(resource.lang, resource.name);
 
     if(options.store === undefined || options.store) {
         await fs.writeFile(scope.resourcePath, output, 'utf-8');

@@ -1,12 +1,10 @@
 export default function MockAPI() {
-    this._send = function(resource) {
-        if(resource.search(/resource\/resource\/translation\/[a-z-A-Z_@-]+$/) != -1) {
-            return Promise.resolve(JSON.stringify({
-                "content": "bar baz"
-            }));
+    this.getResourceTranslation = function(langCode, resourceName) {
+        if(resourceName == "resource" && langCode.search(/^[a-z-A-Z_@-]+$/) != -1) {
+            return Promise.resolve("bar baz");
         }
         else {
-            return Promise.reject(`Resource ${resource} not found`);
+            return Promise.reject(`Resource ${resourceName} in language ${langCode} not found`);
         }
     };
 }
