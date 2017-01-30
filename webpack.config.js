@@ -1,9 +1,7 @@
-var nodeExternals = require("webpack-node-externals");
-
-var nodeModules = {};
+const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
-    entry: ['./src/index.js'],
+    entry: [ './src/index.js' ],
     target: 'node',
     output: {
         path: 'dist/',
@@ -15,9 +13,9 @@ module.exports = {
             {
                 exclude: /node_modules/,
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 query: {
-                    presets: ["es2015", "stage-2"],
+                    presets: [ "es2015", "stage-2" ],
                     plugins: [
                         "transform-es2015-modules-commonjs",
                         "transform-runtime"
@@ -27,5 +25,5 @@ module.exports = {
             }
         ]
     },
-    externals: [nodeExternals()]
+    externals: [ nodeExternals() ]
 };
