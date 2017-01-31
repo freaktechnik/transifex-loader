@@ -9,12 +9,12 @@ module.exports = {
         libraryTarget: 'commonjs2'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 exclude: /node_modules/,
                 test: /\.js$/,
                 loader: 'babel-loader',
-                query: {
+                options: {
                     presets: [ "es2015", "stage-2" ],
                     plugins: [
                         "transform-es2015-modules-commonjs",
