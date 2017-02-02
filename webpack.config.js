@@ -15,7 +15,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 options: {
-                    presets: [ "es2015", "stage-2" ],
+                    presets: [ "es2017" ],
                     plugins: [
                         "transform-es2015-modules-commonjs",
                         "transform-runtime"
