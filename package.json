@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.11.6",
-    "loader-utils": "^0.2.15",
+    "loader-utils": "^1.0.0",
     "mz": "^2.4.0",
     "transifex-api-es6": "^0.2.3",
     "transifex-config": "^2.0.0"
