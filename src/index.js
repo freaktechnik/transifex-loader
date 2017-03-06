@@ -8,7 +8,10 @@ import path from 'path';
 import fs from 'mz/fs';
 
 const load = async (scope, cached) => {
-    const options = loaderUtils.parseQuery(scope.query),
+    const options = Object.assign({
+            disableCache: false,
+            store: true
+        }, loaderUtils.getOptions(scope)),
         basePath = await findFile(scope.context, TRANSIFEXRC),
         txc = new TransifexConfig(basePath);
     let resource;
@@ -44,7 +47,7 @@ const load = async (scope, cached) => {
     resource.lang = await txc.getMappedLang(resource.lang, resource);
     const output = await transifex.getResourceTranslation(resource.lang, resource.name);
 
-    if(options.store === undefined || options.store) {
+    if(options.store) {
         await fs.writeFile(scope.resourcePath, output, 'utf-8');
     }
 
