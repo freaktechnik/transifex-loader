@@ -22,7 +22,7 @@
     "loader-utils": "^1.1.0",
     "mz": "^2.4.0",
     "transifex-api-es6": "^0.2.3",
-    "transifex-config": "^2.0.0"
+    "transifex-config": "^3.0.0"
   },
   "devDependencies": {
     "ava": "^0.18.0",
