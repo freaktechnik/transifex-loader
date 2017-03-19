@@ -87,3 +87,4 @@ test("found resource and wrote it back to disk", async (t) => {
 });
 
 test.todo("No-caching query");
+test.todo("Fallback to .transifexrc in home dir");

@@ -18,6 +18,7 @@ const load = async (scope, cached) => {
 
     scope.addDependency(path.join(basePath, TXCONFIG));
     scope.addDependency(path.join(basePath, TRANSIFEXRC));
+    //TODO add the TRANSIFEXRC in the homedir to the dependencies if it is used.
 
     try {
         resource = await txc.getResource(scope.resourcePath, options.disableCache);
@@ -36,7 +37,7 @@ const load = async (scope, cached) => {
     }
 
     const { main } = await txc.getConfig(),
-        config = await txc.getRC(),
+        config = await txc.getRC(main.host),
         transifex = new TransifexAPI({
             user: config[main.host].username,
             password: config[main.host].password,

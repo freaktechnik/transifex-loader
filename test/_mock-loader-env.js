@@ -19,7 +19,7 @@ host=https://example.com`;
         if(generateResource) {
             txconfig += `
 
-[main.${resourceName}]
+[mainproject.${resourceName}]
 file_filter=<lang>.file
 source_lang=source.file`;
         }
