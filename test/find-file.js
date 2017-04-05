@@ -15,7 +15,7 @@ test("Find file in parent dir", async (t) => {
     await fs.mkdir(endDir);
     await fs.writeFile(path.join(endDir, searchedFile), "foo bar");
 
-    const foundPath = await t.notThrows(findFile(startDir, searchedFile));
+    const foundPath = await findFile(startDir, searchedFile);
     t.is(foundPath, endDir);
 
     await fs.unlink(path.join(endDir, searchedFile));
@@ -28,4 +28,3 @@ test("Gives up once it reaches the root dir without result", async (t) => {
 
     await t.throws(findFile(startDir, searchedFile));
 });
-
