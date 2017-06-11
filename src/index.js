@@ -36,10 +36,8 @@ const load = async (scope, cached) => {
         }
     }
 
-    const [ { main }, config ] = await Promise.all([
-            txc.getConfig(),
-            txc.getRC(main.host)
-        ]),
+    const { main } = await txc.getConfig(),
+        config = await txc.getRC(main.host),
         transifex = new TransifexAPI({
             user: config[main.host].username,
             password: config[main.host].password,
