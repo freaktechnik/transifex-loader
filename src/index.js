@@ -36,8 +36,10 @@ const load = async (scope, cached) => {
         }
     }
 
-    const { main } = await txc.getConfig(),
-        config = await txc.getRC(main.host),
+    const [ { main }, config ] = await Promise.all([
+            txc.getConfig(),
+            txc.getRC(main.host)
+        ]),
         transifex = new TransifexAPI({
             user: config[main.host].username,
             password: config[main.host].password,
@@ -46,13 +48,19 @@ const load = async (scope, cached) => {
         });
 
     resource.lang = await txc.getMappedLang(resource.lang, resource);
-    const output = await transifex.getResourceTranslation(resource.lang, resource.name);
+    try {
+        const output = await transifex.getResourceTranslation(resource.lang, resource.name);
 
-    if(options.store) {
-        await fs.writeFile(scope.resourcePath, output, 'utf-8');
+        if(options.store) {
+            await fs.writeFile(scope.resourcePath, output, 'utf-8');
+        }
+
+        return output;
     }
-
-    return output;
+    catch(e) {
+        // Handle network errors by returning the cached version.
+        return cached;
+    }
 };
 
 module.exports = function(contents) {
