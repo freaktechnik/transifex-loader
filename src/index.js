@@ -20,7 +20,7 @@ const load = async (scope, cached) => {
         resource;
 
     try {
-        txc = new TransifexConfig(txcBase, txrcBase);
+        txc = new TransifexConfig(txcBase);
     }
     catch(e) {
         scope.emitWarning(`Did not find required transifex config files`);
