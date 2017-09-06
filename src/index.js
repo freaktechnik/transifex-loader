@@ -12,13 +12,27 @@ const load = async (scope, cached) => {
             disableCache: false,
             store: true
         }, loaderUtils.getOptions(scope)),
-        basePath = await findFile(scope.context, TRANSIFEXRC),
-        txc = new TransifexConfig(basePath);
-    let resource;
+        [ txrcBase, txcBase ] = await Promise.all([
+            findFile(scope.context, TRANSIFEXRC),
+            findFile(scope.context, TXCONFIG)
+        ]);
+    let txc,
+        resource;
 
-    scope.addDependency(path.join(basePath, TXCONFIG));
-    scope.addDependency(path.join(basePath, TRANSIFEXRC));
-    //TODO add the TRANSIFEXRC in the homedir to the dependencies if it is used.
+    try {
+        txc = new TransifexConfig(txcBase, txrcBase);
+    }
+    catch(e) {
+        scope.emitWarning(`Did not find required transifex config files`);
+        return cached;
+    }
+
+    scope.addDependency(path.join(txcBase, TXCONFIG));
+    if(txcBase !== txrcBase) {
+        // Depend on .transifexrc in the project directory, even if it doesn't exist.
+        scope.addDependency(path.join(txcBase, TRANSIFEXRC));
+    }
+    scope.addDependency(path.join(txrcBase, TRANSIFEXRC));
 
     try {
         resource = await txc.getResource(scope.resourcePath, options.disableCache);
