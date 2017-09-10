@@ -23,7 +23,8 @@ module.exports = {
                                 targets: {
                                     node: "6.11.3",
                                     uglify: false
-                                }
+                                },
+                                modules: false
                             }
                         ]
                     ],
