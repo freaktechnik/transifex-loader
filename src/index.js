@@ -75,7 +75,12 @@ const load = async (scope, cached) => {
     }
 };
 
-module.exports = function(contents) {
+/**
+ * @param {string} contents - Contents of the loaded file.
+ * @this external:Loader
+ * @returns {Promise.<string>|string} Updated translation file.
+ */
+export default function(contents) {
     const callback = this.async();
     this.cacheable(true);
     if(!callback) {
@@ -88,4 +93,4 @@ module.exports = function(contents) {
         this.emitError(e);
         callback(null, contents);
     });
-};
+}
