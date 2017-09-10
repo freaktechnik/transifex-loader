@@ -29,7 +29,12 @@ module.exports = {
                         ]
                     ],
                     plugins: [
-                        'transform-runtime'
+                        [
+                            'transform-runtime',
+                            {
+                                polyfill: false
+                            }
+                        ]
                     ],
                     babelrc: false
                 }
