@@ -16,10 +16,19 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 options: {
-                    presets: [ "es2017" ],
+                    presets: [
+                        [
+                            "env",
+                            {
+                                targets: {
+                                    node: "6.11.3",
+                                    uglify: false
+                                }
+                            }
+                        ]
+                    ],
                     plugins: [
-                        "transform-es2015-modules-commonjs",
-                        "transform-runtime"
+                        'transform-runtime'
                     ],
                     babelrc: false
                 }
