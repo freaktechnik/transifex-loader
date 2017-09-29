@@ -6,9 +6,9 @@ import randomString from 'random-string';
 const getMockEnv = async (query = "", generateResource = true, resourceName = "resource", noFiles = false) => {
     let context = "";
     if(!noFiles) {
-        context = path.join(os.tmpdir(), "transifex-loader-test-" + randomString({
+        context = path.join(os.tmpdir(), `transifex-loader-test-${randomString({
             length: 12
-        }));
+        })}`);
 
         await fs.mkdir(context);
         await fs.mkdir(path.join(context, '.tx'));

@@ -7,9 +7,9 @@ import randomString from 'random-string';
 
 test("Find file in parent dir", async (t) => {
     const searchedFile = "foo.bar";
-    const endDir = path.join(os.tmpdir(), "transifex-loader-test-" + randomString({
+    const endDir = path.join(os.tmpdir(), `transifex-loader-test-${randomString({
         length: 12
-    }));
+    })}`);
     const startDir = path.join(endDir, "/some/deep/path");
 
     await fs.mkdir(endDir);

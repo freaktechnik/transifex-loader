@@ -3,8 +3,18 @@
         "sourceType": "module",
         "ecmaVersion": 2017
     },
+    "plugins": [
+        "import"
+    ],
     "rules": {
         "node/no-unsupported-features": 0
     },
-    "extends": "plugin:freaktechnik/node"
+    "settings": {
+        "import/resolver": "webpack"
+    },
+    "extends": [
+        "plugin:freaktechnik/node",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ]
 }

@@ -12,7 +12,10 @@ const load = async (scope, cached) => {
             disableCache: false,
             store: true
         }, loaderUtils.getOptions(scope)),
-        [ txrcBase, txcBase ] = await Promise.all([
+        [
+            txrcBase,
+            txcBase
+        ] = await Promise.all([
             findFile(scope.context, TRANSIFEXRC),
             findFile(scope.context, TXCONFIG)
         ]);
@@ -45,9 +48,8 @@ const load = async (scope, cached) => {
         else if(e instanceof MatchesSourceError) {
             return cached;
         }
-        else {
-            throw e;
-        }
+
+        throw e;
     }
 
     const { main } = await txc.getConfig(),
@@ -87,10 +89,12 @@ export default function(contents) {
         return contents;
     }
 
-    load(this, contents).then((output) => {
-        callback(null, output);
-    }).catch((e) => {
-        this.emitError(e);
-        callback(null, contents);
-    });
+    load(this, contents)
+        .then((output) => {
+            callback(null, output);
+        })
+        .catch((e) => {
+            this.emitError(e);
+            callback(null, contents);
+        });
 }
