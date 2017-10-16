@@ -1,20 +1,12 @@
 {
     "parserOptions": {
-        "sourceType": "module",
         "ecmaVersion": 2017
     },
-    "plugins": [
-        "import"
-    ],
     "rules": {
         "node/no-unsupported-features": 0
     },
-    "settings": {
-        "import/resolver": "webpack"
-    },
     "extends": [
-        "plugin:freaktechnik/node",
-        "plugin:import/errors",
-        "plugin:import/warnings"
+        "@freaktechnik/eslint-config-node",
+        "@freaktechnik/eslint-config-webpack"
     ]
 }
