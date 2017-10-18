@@ -1,7 +1,7 @@
 # transifex-loader
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/freaktechnik/transifex-loader.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/freaktechnik/transifex-loader.svg?branch=master)](https://travis-ci.org/freaktechnik/transifex-loader) [![codecov](https://codecov.io/gh/freaktechnik/transifex-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/freaktechnik/transifex-loader) [![Dependency Status](https://dependencyci.com/github/freaktechnik/transifex-loader/badge)](https://dependencyci.com/github/freaktechnik/transifex-loader)
+[![Build Status](https://travis-ci.org/freaktechnik/transifex-loader.svg?branch=master)](https://travis-ci.org/freaktechnik/transifex-loader) [![codecov](https://codecov.io/gh/freaktechnik/transifex-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/freaktechnik/transifex-loader)
 
 A loader, that fetches the content of string files from Transifex. Requires
 configuration via `.transifexrc` and `.tx/config` in the same format as the
