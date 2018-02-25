@@ -83,4 +83,6 @@ const cleanUpMockEnv = async (mockEnv) => {
     await fs.rmdir(mockEnv.context);
 };
 
-export { getMockEnv, cleanUpMockEnv };
+export {
+    getMockEnv, cleanUpMockEnv
+};

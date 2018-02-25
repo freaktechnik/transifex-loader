@@ -1,6 +1,8 @@
 import test from 'ava';
-import transifexLoader from '../src/index';
-import { getMockEnv, cleanUpMockEnv } from './_mock-loader-env';
+import transifexLoader from '../src';
+import {
+    getMockEnv, cleanUpMockEnv
+} from './_mock-loader-env';
 import path from 'path';
 import fs from 'mz/fs';
 

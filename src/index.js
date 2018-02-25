@@ -1,6 +1,12 @@
-import { NoMatchingResourceError, MatchesSourceError } from 'transifex-config/lib/errors';
+import {
+    NoMatchingResourceError,
+    MatchesSourceError
+} from 'transifex-config/lib/errors';
 import TransifexConfig from 'transifex-config';
-import { TRANSIFEXRC, TXCONFIG } from 'transifex-config/lib/load-config';
+import {
+    TRANSIFEXRC,
+    TXCONFIG
+} from 'transifex-config/lib/load-config';
 import findFile from './lib/find-file';
 import TransifexAPI from 'transifex-api-es6';
 import loaderUtils from 'loader-utils';

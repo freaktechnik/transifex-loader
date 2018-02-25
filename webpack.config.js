@@ -21,7 +21,7 @@ module.exports = {
                             "env",
                             {
                                 targets: {
-                                    node: "6.11.3",
+                                    node: "8.9.4",
                                     uglify: false
                                 },
                                 modules: false
