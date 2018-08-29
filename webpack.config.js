@@ -18,23 +18,17 @@ module.exports = {
                 options: {
                     presets: [
                         [
-                            "env",
+                            "@babel/preset-env",
                             {
                                 targets: {
-                                    node: "8.9.4",
-                                    uglify: false
+                                    node: "8.9.4"
                                 },
                                 modules: false
                             }
                         ]
                     ],
                     plugins: [
-                        [
-                            'transform-runtime',
-                            {
-                                polyfill: false
-                            }
-                        ]
+                        '@babel/plugin-transform-runtime',
                     ],
                     babelrc: false
                 }

@@ -26,5 +26,5 @@ test("Gives up once it reaches the root dir without result", async (t) => {
     const searchedFile = "foo.bar";
     const startDir = os.tmpdir();
 
-    await t.throws(findFile(startDir, searchedFile));
+    await t.throwsAsync(findFile(startDir, searchedFile));
 });

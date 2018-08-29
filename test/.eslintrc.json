@@ -2,5 +2,8 @@
     "parserOptions": {
         "ecmaVersion": 2018
     },
+    "rules": {
+      "ava/use-t-well": 0
+    },
     "extends": "@freaktechnik/eslint-config-test"
 }

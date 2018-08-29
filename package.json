@@ -18,28 +18,30 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
-    "babel-runtime": "^6.11.6",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
     "loader-utils": "^1.1.0",
     "mz": "^2.7.0",
     "transifex-api-es6": "^0.2.3",
     "transifex-config": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "@freaktechnik/eslint-config-node": "^6.4.4",
     "@freaktechnik/eslint-config-test": "^6.4.4",
     "@freaktechnik/eslint-config-webpack": "^6.4.2",
-    "ava": "^0.25.0",
-    "babel-core": "^6.26.3",
+    "ava": "1.0.0-beta.8",
     "babel-loader": "^8.0.0",
     "babel-plugin-module-rewrite": "0.2.0",
-    "babel-plugin-transform-runtime": "^6.12.0",
     "codecov": "^3.0.4",
-    "eslint": "^5.1.0",
-    "nyc": "^12.0.2",
+    "eslint": "^5.4.0",
+    "nyc": "^13.0.1",
     "random-string": "^0.2.0",
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.0.4",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
     "webpack-node-externals": "^1.7.2"
   },
   "peerDependencies": {
@@ -53,15 +55,19 @@
     "url": "git://github.com/freaktechnik/transifex-loader.git"
   },
   "ava": {
-    "babel": "inherit",
+    "babel": {
+      "testOptions": {
+        "babelrc": false
+      }
+    },
     "require": [
-      "babel-core/register"
+      "@babel/register"
     ]
   },
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "targets": {
             "node": "current"
@@ -72,12 +78,7 @@
       "@ava/stage-4"
     ],
     "plugins": [
-      [
-        "transform-runtime",
-        {
-          "polyfill": false
-        }
-      ],
+      "@babel/plugin-transform-runtime",
       [
         "module-rewrite",
         {
