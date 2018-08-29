@@ -31,7 +31,7 @@
     "@freaktechnik/eslint-config-webpack": "^6.4.2",
     "ava": "^0.25.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^8.0.0",
     "babel-plugin-module-rewrite": "0.2.0",
     "babel-plugin-transform-runtime": "^6.12.0",
     "codecov": "^3.0.4",
