@@ -2,6 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/freaktechnik/transifex-loader.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/freaktechnik/transifex-loader.svg?branch=master)](https://travis-ci.org/freaktechnik/transifex-loader) [![codecov](https://codecov.io/gh/freaktechnik/transifex-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/freaktechnik/transifex-loader)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffreaktechnik%2Ftransifex-loader.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffreaktechnik%2Ftransifex-loader?ref=badge_shield)
 
 A loader, that fetches the content of string files from Transifex. Requires
 configuration via `.transifexrc` and `.tx/config` in the same format as the
@@ -43,3 +44,7 @@ system and fetches it from Transifex, too.
 
  - Requires the project to be on transifex.com but does not complain about it.
  - Ignores `minimum_perc`.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffreaktechnik%2Ftransifex-loader.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffreaktechnik%2Ftransifex-loader?ref=badge_large)
