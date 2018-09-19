@@ -18,13 +18,20 @@ const load = async (scope, cached) => {
             disableCache: false,
             store: true
         }, loaderUtils.getOptions(scope)),
+        gracefulError = (e) => {
+            scope.emitWarning(e);
+        },
         [
             txrcBase,
             txcBase
         ] = await Promise.all([
-            findFile(scope.context, TRANSIFEXRC),
-            findFile(scope.context, TXCONFIG)
+            findFile(scope.context, TRANSIFEXRC).catch(gracefulError),
+            findFile(scope.context, TXCONFIG).catch(gracefulError)
         ]);
+    if(!txcBase || !txrcBase) {
+        return cached;
+    }
+
     let txc,
         resource;
 
