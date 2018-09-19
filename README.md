@@ -41,5 +41,5 @@ system and fetches it from Transifex, too.
 
 ## Known incompatibilities (to tx)
 
- - Requires the project to be on transifex.com but does not complain about it.
- - Ignores `minimum_perc`.
+- Requires the project to be on transifex.com but does not complain about it.
+- Ignores `minimum_perc`.

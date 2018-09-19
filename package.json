@@ -6,7 +6,9 @@
   "scripts": {
     "test": "npm run lint && nyc ava",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "lint": "eslint src/ test/",
+    "lint:js": "eslint src/ test/",
+    "lint:ec": "eclint check $(git ls-files)",
+    "lint": "npm run lint:js && npm run lint:ec",
     "build": "webpack --mode=production",
     "prepublishOnly": "npm run build"
   },
@@ -33,6 +35,7 @@
     "ava": "1.0.0-beta.8",
     "babel-plugin-module-rewrite": "0.2.0",
     "codecov": "^3.0.4",
+    "eclint": "^2.8.0",
     "eslint": "^5.4.0",
     "nyc": "^13.0.1",
     "random-string": "^0.2.0",
