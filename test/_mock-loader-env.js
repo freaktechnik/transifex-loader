@@ -73,14 +73,20 @@ hostname=https://example.com`),
 };
 
 const cleanUpMockEnv = async (mockEnv) => {
-    await Promise.all([
-        fs.unlink(path.join(mockEnv.context, '.tx/config')),
-        fs.unlink(path.join(mockEnv.context, '.transifexrc')),
-        fs.unlink(mockEnv.resourcePath)
-    ]);
+    if(mockEnv.context) {
+        const ignore = () => { /* nothing */ };
+        const toRemove = [
+            fs.unlink(path.join(mockEnv.context, '.tx/config')).catch(ignore),
+            fs.unlink(path.join(mockEnv.context, '.transifexrc')).catch(ignore)
+        ];
+        if(mockEnv.resourcePath) {
+            toRemove.push(fs.unlink(mockEnv.resourcePath).catch(ignore));
+        }
+        await Promise.all(toRemove);
 
-    await fs.rmdir(path.join(mockEnv.context, '.tx'));
-    await fs.rmdir(mockEnv.context);
+        await fs.rmdir(path.join(mockEnv.context, '.tx'));
+        await fs.rmdir(mockEnv.context);
+    }
 };
 
 export {
