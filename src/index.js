@@ -72,9 +72,9 @@ const load = async (scope, cached) => {
             password: config[main.host].password,
             projectName: resource.project,
             resourceName: resource.name
-        });
-
-    resource.lang = await txc.getMappedLang(resource.lang, resource);
+        }),
+        mappedLang = await txc.getMappedLang(resource.lang, resource);
+    resource.lang = mappedLang;
     try {
         const output = await transifex.getResourceTranslation(resource.lang, resource.name);
 
