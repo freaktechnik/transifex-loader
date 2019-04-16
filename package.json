@@ -37,7 +37,7 @@
     "codecov": "^3.1.0",
     "eclint": "^2.8.0",
     "eslint": "^5.6.0",
-    "nyc": "^13.0.1",
+    "nyc": "^14.0.0",
     "random-string": "^0.2.0",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.1",
