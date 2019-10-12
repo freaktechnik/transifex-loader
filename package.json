@@ -29,7 +29,7 @@
     "@babel/core": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "@freaktechnik/eslint-config-node": "^6.5.0",
+    "@freaktechnik/eslint-config-node": "^7.0.0",
     "@freaktechnik/eslint-config-test": "^6.5.1",
     "@freaktechnik/eslint-config-webpack": "^6.5.0",
     "ava": "2.2.0",
