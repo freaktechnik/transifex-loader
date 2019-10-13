@@ -23,7 +23,7 @@
     "loader-utils": "^1.2.3",
     "mz": "^2.7.0",
     "transifex-api-es6": "^0.2.4",
-    "transifex-config": "^4.0.0"
+    "transifex-config": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
