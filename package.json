@@ -32,7 +32,7 @@
     "@freaktechnik/eslint-config-node": "^7.0.0",
     "@freaktechnik/eslint-config-test": "^7.0.0",
     "@freaktechnik/eslint-config-webpack": "^7.0.0",
-    "ava": "^2.4.0",
+    "ava": "^3.0.0",
     "babel-plugin-module-rewrite": "0.2.0",
     "codecov": "^3.6.1",
     "eclint": "^2.8.1",
