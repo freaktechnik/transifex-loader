@@ -7,24 +7,24 @@ import randomString from 'random-string';
 
 test("Find file in parent dir", async (t) => {
     const searchedFile = "foo.bar";
-    const endDir = path.join(os.tmpdir(), `transifex-loader-test-${randomString({
+    const endDirectory = path.join(os.tmpdir(), `transifex-loader-test-${randomString({
         length: 12
     })}`);
-    const startDir = path.join(endDir, "/some/deep/path");
+    const startDirectory = path.join(endDirectory, "/some/deep/path");
 
-    await fs.mkdir(endDir);
-    await fs.writeFile(path.join(endDir, searchedFile), "foo bar");
+    await fs.mkdir(endDirectory);
+    await fs.writeFile(path.join(endDirectory, searchedFile), "foo bar");
 
-    const foundPath = await findFile(startDir, searchedFile);
-    t.is(foundPath, endDir);
+    const foundPath = await findFile(startDirectory, searchedFile);
+    t.is(foundPath, endDirectory);
 
-    await fs.unlink(path.join(endDir, searchedFile));
-    await fs.rmdir(endDir);
+    await fs.unlink(path.join(endDirectory, searchedFile));
+    await fs.rmdir(endDirectory);
 });
 
 test("Gives up once it reaches the root dir without result", async (t) => {
     const searchedFile = "foo.bar";
-    const startDir = os.tmpdir();
+    const startDirectory = os.tmpdir();
 
-    await t.throwsAsync(findFile(startDir, searchedFile));
+    await t.throwsAsync(findFile(startDirectory, searchedFile));
 });

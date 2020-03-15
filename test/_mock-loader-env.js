@@ -3,7 +3,7 @@ import os from 'os';
 import fs from 'mz/fs';
 import randomString from 'random-string';
 
-const getMockEnv = async (query = "", generateResource = true, resourceName = "resource", noFiles = false) => {
+const getMockEnvironment = async (query = "", generateResource = true, resourceName = "resource", noFiles = false) => {
     let context = "";
     if(!noFiles) {
         context = path.join(os.tmpdir(), `transifex-loader-test-${randomString({
@@ -72,23 +72,23 @@ hostname=https://example.com`),
     };
 };
 
-const cleanUpMockEnv = async (mockEnv) => {
-    if(mockEnv.context) {
+const cleanUpMockEnvironment = async (mockEnvironment) => {
+    if(mockEnvironment.context) {
         const ignore = () => { /* nothing */ };
         const toRemove = [
-            fs.unlink(path.join(mockEnv.context, '.tx/config')).catch(ignore),
-            fs.unlink(path.join(mockEnv.context, '.transifexrc')).catch(ignore)
+            fs.unlink(path.join(mockEnvironment.context, '.tx/config')).catch(ignore),
+            fs.unlink(path.join(mockEnvironment.context, '.transifexrc')).catch(ignore)
         ];
-        if(mockEnv.resourcePath) {
-            toRemove.push(fs.unlink(mockEnv.resourcePath).catch(ignore));
+        if(mockEnvironment.resourcePath) {
+            toRemove.push(fs.unlink(mockEnvironment.resourcePath).catch(ignore));
         }
         await Promise.all(toRemove);
 
-        await fs.rmdir(path.join(mockEnv.context, '.tx'));
-        await fs.rmdir(mockEnv.context);
+        await fs.rmdir(path.join(mockEnvironment.context, '.tx'));
+        await fs.rmdir(mockEnvironment.context);
     }
 };
 
 export {
-    getMockEnv, cleanUpMockEnv
+    getMockEnvironment as getMockEnv, cleanUpMockEnvironment as cleanUpMockEnv
 };

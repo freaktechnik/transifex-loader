@@ -1,20 +1,20 @@
 import test from 'ava';
 import transifexLoader from '../src';
 import {
-    getMockEnv, cleanUpMockEnv
+    getMockEnv as getMockEnvironment, cleanUpMockEnv as cleanUpMockEnvironment
 } from './_mock-loader-env';
 import path from 'path';
 import fs from 'mz/fs';
 
 test.afterEach.always((t) => {
     if(t.context.env) {
-        return cleanUpMockEnv(t.context.env);
+        return cleanUpMockEnvironment(t.context.env);
     }
 });
 
 test("Bypasses if it can't be async", (t) => {
     const content = "foo bar";
-    const mockEnv = {
+    const mockEnvironment = {
         async() {
             return undefined;
         },
@@ -23,104 +23,104 @@ test("Bypasses if it can't be async", (t) => {
         }
     };
 
-    const result = transifexLoader.call(mockEnv, content);
+    const result = transifexLoader.call(mockEnvironment, content);
     t.is(result, content);
-    t.true(mockEnv._cacheable);
+    t.true(mockEnvironment._cacheable);
 });
 
 test("Bypasses on error", async (t) => {
     const content = "foo bar";
-    const mockEnv = await getMockEnv(undefined, false, undefined, true);
-    t.context.env = mockEnv;
+    const mockEnvironment = await getMockEnvironment(undefined, false, undefined, true);
+    t.context.env = mockEnvironment;
 
-    transifexLoader.call(mockEnv, content);
-    const result = await mockEnv._promise;
+    transifexLoader.call(mockEnvironment, content);
+    const result = await mockEnvironment._promise;
 
     t.is(result, content);
-    t.truthy(mockEnv._warning);
-    t.falsy(mockEnv._error);
+    t.truthy(mockEnvironment._warning);
+    t.falsy(mockEnvironment._error);
 });
 
 test("Didn't find resource but loaded config", async (t) => {
-    const mockEnv = await getMockEnv("", false);
-    t.context.env = mockEnv;
+    const mockEnvironment = await getMockEnvironment("", false);
+    t.context.env = mockEnvironment;
 
-    transifexLoader.call(mockEnv, "test");
-    const result = await mockEnv._promise;
-    mockEnv._wasSuccessful();
+    transifexLoader.call(mockEnvironment, "test");
+    const result = await mockEnvironment._promise;
+    mockEnvironment._wasSuccessful();
 
     t.is(result, "test");
 
-    t.falsy(mockEnv._error);
-    t.is(mockEnv._warning, `Could not find any transifex resource for ${mockEnv.resourcePath}.`);
+    t.falsy(mockEnvironment._error);
+    t.is(mockEnvironment._warning, `Could not find any transifex resource for ${mockEnvironment.resourcePath}.`);
 });
 
 test("found resource without writing it", async (t) => {
-    const mockEnv = await getMockEnv("?-store");
-    t.context.env = mockEnv;
+    const mockEnvironment = await getMockEnvironment("?-store");
+    t.context.env = mockEnvironment;
 
-    transifexLoader.call(mockEnv, "foo bar");
-    const result = await mockEnv._promise;
-    mockEnv._wasSuccessful();
+    transifexLoader.call(mockEnvironment, "foo bar");
+    const result = await mockEnvironment._promise;
+    mockEnvironment._wasSuccessful();
 
     t.is(result, "bar baz");
 
-    const diskContents = await fs.readFile(mockEnv.resourcePath, 'utf-8');
+    const diskContents = await fs.readFile(mockEnvironment.resourcePath, 'utf-8');
     t.is(diskContents, "foo bar");
 
-    t.deepEqual(mockEnv._dependencies, [
-        path.join(mockEnv.context, '.tx/config'),
-        path.join(mockEnv.context, '.transifexrc')
+    t.deepEqual(mockEnvironment._dependencies, [
+        path.join(mockEnvironment.context, '.tx/config'),
+        path.join(mockEnvironment.context, '.transifexrc')
     ]);
 });
 
 test("found resource and wrote it back to disk", async (t) => {
-    const mockEnv = await getMockEnv();
-    t.context.env = mockEnv;
+    const mockEnvironment = await getMockEnvironment();
+    t.context.env = mockEnvironment;
 
-    transifexLoader.call(mockEnv, "foo bar");
-    const result = await mockEnv._promise;
-    mockEnv._wasSuccessful();
+    transifexLoader.call(mockEnvironment, "foo bar");
+    const result = await mockEnvironment._promise;
+    mockEnvironment._wasSuccessful();
 
     t.is(result, "bar baz");
 
-    const diskContents = await fs.readFile(mockEnv.resourcePath, 'utf-8');
+    const diskContents = await fs.readFile(mockEnvironment.resourcePath, 'utf-8');
     t.is(diskContents, "bar baz");
 
-    t.deepEqual(mockEnv._dependencies, [
-        path.join(mockEnv.context, '.tx/config'),
-        path.join(mockEnv.context, '.transifexrc')
+    t.deepEqual(mockEnvironment._dependencies, [
+        path.join(mockEnvironment.context, '.tx/config'),
+        path.join(mockEnvironment.context, '.transifexrc')
     ]);
 });
 
 test("Returns cached version when no .transifexrc is found", async (t) => {
-    const mockEnv = await getMockEnv("", true);
-    t.context.env = mockEnv;
-    await fs.unlink(path.join(mockEnv.context, '.transifexrc'));
+    const mockEnvironment = await getMockEnvironment("", true);
+    t.context.env = mockEnvironment;
+    await fs.unlink(path.join(mockEnvironment.context, '.transifexrc'));
 
-    transifexLoader.call(mockEnv, "test");
-    const result = await mockEnv._promise;
-    mockEnv._wasSuccessful();
+    transifexLoader.call(mockEnvironment, "test");
+    const result = await mockEnvironment._promise;
+    mockEnvironment._wasSuccessful();
 
     t.is(result, "test");
 
-    t.falsy(mockEnv._error);
-    t.is(mockEnv._warning.toString(), "Error: Could not find .transifexrc");
+    t.falsy(mockEnvironment._error);
+    t.is(mockEnvironment._warning.toString(), "Error: Could not find .transifexrc");
 });
 
 test("Returns cached version when no .tx/config is found", async (t) => {
-    const mockEnv = await getMockEnv("", true);
-    t.context.env = mockEnv;
-    await fs.unlink(path.join(mockEnv.context, '.tx/config'));
+    const mockEnvironment = await getMockEnvironment("", true);
+    t.context.env = mockEnvironment;
+    await fs.unlink(path.join(mockEnvironment.context, '.tx/config'));
 
-    transifexLoader.call(mockEnv, "test");
-    const result = await mockEnv._promise;
-    mockEnv._wasSuccessful();
+    transifexLoader.call(mockEnvironment, "test");
+    const result = await mockEnvironment._promise;
+    mockEnvironment._wasSuccessful();
 
     t.is(result, "test");
 
-    t.falsy(mockEnv._error);
-    t.is(mockEnv._warning.toString(), "Error: Could not find .tx/config");
+    t.falsy(mockEnvironment._error);
+    t.is(mockEnvironment._warning.toString(), "Error: Could not find .tx/config");
 });
 
 test.todo("No-caching query");

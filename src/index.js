@@ -18,8 +18,8 @@ const load = async (scope, cached) => {
             disableCache: false,
             store: true
         }, loaderUtils.getOptions(scope)),
-        gracefulError = (e) => {
-            scope.emitWarning(e);
+        gracefulError = (error) => {
+            scope.emitWarning(error);
         },
         [
             txrcBase,
@@ -38,7 +38,7 @@ const load = async (scope, cached) => {
     try {
         txc = new TransifexConfig(txcBase);
     }
-    catch(e) {
+    catch(error) {
         scope.emitWarning(`Did not find required transifex config files`);
         return cached;
     }
@@ -53,16 +53,16 @@ const load = async (scope, cached) => {
     try {
         resource = await txc.getResource(scope.resourcePath, options.disableCache);
     }
-    catch(e) {
-        if(e instanceof NoMatchingResourceError) {
+    catch(error) {
+        if(error instanceof NoMatchingResourceError) {
             scope.emitWarning(`Could not find any transifex resource for ${scope.resourcePath}.`);
             return cached;
         }
-        else if(e instanceof MatchesSourceError) {
+        else if(error instanceof MatchesSourceError) {
             return cached;
         }
 
-        throw e;
+        throw error;
     }
 
     const { main } = await txc.getConfig(),
@@ -84,7 +84,7 @@ const load = async (scope, cached) => {
 
         return output;
     }
-    catch(e) {
+    catch(error) {
         // Handle network errors by returning the cached version.
         return cached;
     }
@@ -106,8 +106,8 @@ export default function(contents) {
         .then((output) => {
             callback(null, output);
         })
-        .catch((e) => {
-            this.emitError(e);
+        .catch((error) => {
+            this.emitError(error);
             callback(null, contents);
         });
 }
