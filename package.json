@@ -28,7 +28,7 @@
   "devDependencies": {
     "@ava/babel": "^1.0.1",
     "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "@babel/register": "^7.9.0",
     "@freaktechnik/eslint-config-node": "^7.1.0",
     "@freaktechnik/eslint-config-test": "^7.1.0",
