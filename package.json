@@ -26,17 +26,17 @@
     "mz": "^2.7.0",
     "transifex-api-es6": "^0.2.4",
     "transifex-config": "^4.0.1",
-    "snyk": "^1.319.2"
+    "snyk": "^1.321.0"
   },
   "devDependencies": {
     "@ava/babel": "^1.0.1",
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/register": "^7.9.0",
-    "@freaktechnik/eslint-config-node": "^7.1.0",
+    "@freaktechnik/eslint-config-node": "^7.2.0",
     "@freaktechnik/eslint-config-test": "^7.2.0",
-    "@freaktechnik/eslint-config-webpack": "^7.1.0",
-    "ava": "^3.8.1",
+    "@freaktechnik/eslint-config-webpack": "^7.2.0",
+    "ava": "^3.8.2",
     "babel-plugin-module-rewrite": "0.2.0",
     "codecov": "^3.6.1",
     "eclint": "^2.8.1",
