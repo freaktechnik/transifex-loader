@@ -10,9 +10,7 @@
     "lint:ec": "eclint check $(git ls-files)",
     "lint": "npm run lint:js && npm run lint:ec",
     "build": "webpack --mode=production",
-    "prepublishOnly": "npm run build",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "transifex",
@@ -25,8 +23,7 @@
     "loader-utils": "^1.4.0",
     "mz": "^2.7.0",
     "transifex-api-es6": "^0.2.4",
-    "transifex-config": "^4.0.1",
-    "snyk": "^1.321.0"
+    "transifex-config": "^4.0.1"
   },
   "devDependencies": {
     "@ava/babel": "^1.0.1",
@@ -91,6 +88,5 @@
   "engines": {
     "node": ">= 8.9.4"
   },
-  "sideEffects": false,
-  "snyk": true
+  "sideEffects": false
 }
