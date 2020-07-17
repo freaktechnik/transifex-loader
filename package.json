@@ -20,29 +20,29 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
-    "loader-utils": "^1.4.0",
+    "loader-utils": "^2.0.0",
     "mz": "^2.7.0",
     "transifex-api-es6": "^0.2.4",
     "transifex-config": "^4.0.1"
   },
   "devDependencies": {
     "@ava/babel": "^1.0.1",
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/register": "^7.9.0",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.5",
     "@freaktechnik/eslint-config-node": "^7.2.0",
     "@freaktechnik/eslint-config-test": "^7.2.0",
     "@freaktechnik/eslint-config-webpack": "^7.2.0",
-    "ava": "^3.8.2",
+    "ava": "^3.10.1",
     "babel-plugin-module-rewrite": "0.2.0",
-    "codecov": "^3.6.1",
+    "codecov": "^3.7.1",
     "eclint": "^2.8.1",
-    "eslint": "^6.8.0",
-    "nyc": "^15.0.1",
+    "eslint": "^7.4.0",
+    "nyc": "^15.1.0",
     "random-string": "^0.2.0",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.0"
   },
   "peerDependencies": {
     "webpack": "^4.0.0"
