@@ -20,6 +20,9 @@ test("Bypasses if it can't be async", (t) => {
         },
         cacheable(cacheable) {
             this._cacheable = cacheable;
+        },
+        getOptions() {
+            return {};
         }
     };
 

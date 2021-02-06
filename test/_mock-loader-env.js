@@ -68,6 +68,11 @@ hostname=https://example.com`),
         },
         emitWarning(warning) {
             this._warning = warning;
+        },
+        getOptions() {
+            return {
+                store: !query || !query.includes('-store')
+            };
         }
     };
 };
