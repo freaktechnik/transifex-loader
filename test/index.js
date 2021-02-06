@@ -1,5 +1,5 @@
 import test from 'ava';
-import transifexLoader from '../src';
+import transifexLoader from '../src/index.mjs';
 import {
     getMockEnv as getMockEnvironment, cleanUpMockEnv as cleanUpMockEnvironment
 } from './_mock-loader-env';
@@ -28,7 +28,7 @@ test("Bypasses if it can't be async", (t) => {
 
     const result = transifexLoader.call(mockEnvironment, content);
     t.is(result, content);
-    t.true(mockEnvironment._cacheable);
+    t.false(mockEnvironment._cacheable);
 });
 
 test("Bypasses on error", async (t) => {

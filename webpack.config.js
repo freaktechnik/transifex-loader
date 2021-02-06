@@ -2,12 +2,12 @@ const nodeExternals = require("webpack-node-externals");
 const path = require("path");
 
 module.exports = {
-    entry: [ './src/index.js' ],
+    entry: './src/index.mjs',
     target: 'node',
     output: {
-        path: path.resolve(__dirname, 'dist/'),
         filename: 'transifex-loader.js',
         libraryTarget: 'commonjs2'
     },
-    externals: [ nodeExternals() ]
+    externals: [ nodeExternals() ],
+    mode: 'production'
 };

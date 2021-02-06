@@ -3,9 +3,14 @@
   "version": "5.0.2",
   "description": "Webpack loader to fetch imported translation files from transifex.",
   "main": "dist/transifex-loader.js",
+  "type": "commonjs",
+  "exports": {
+    "import": "./src/index.mjs",
+    "require": "./dist/transifex-loader.js"
+  },
   "scripts": {
     "test": "npm run lint && nyc ava",
-    "lint:js": "eslint src/ test/",
+    "lint:js": "eslint --ext js,mjs src/ test/",
     "lint:ec": "eclint check $(git ls-files)",
     "lint": "npm run lint:js && npm run lint:ec",
     "build": "webpack --mode=production",
@@ -36,12 +41,12 @@
     "eslint": "^7.19.0",
     "nyc": "^15.1.0",
     "random-string": "^0.2.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
+    "webpack": "5.21.1",
+    "webpack-cli": "^4.5.0",
     "webpack-node-externals": "^2.5.0"
   },
   "peerDependencies": {
-    "webpack": ">=5.0.0"
+    "webpack": "^5.21.1"
   },
   "bugs": {
     "url": "https://github.com/freaktechnik/transifex-loader/issues"

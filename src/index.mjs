@@ -1,13 +1,13 @@
 import {
     NoMatchingResourceError,
     MatchesSourceError
-} from 'transifex-config/lib/errors';
+} from 'transifex-config/lib/errors.js';
 import TransifexConfig from 'transifex-config';
 import {
     TRANSIFEXRC,
     TXCONFIG
-} from 'transifex-config/lib/load-config';
-import findFile from './lib/find-file';
+} from 'transifex-config/lib/load-config.js';
+import findFile from './lib/find-file.mjs';
 import TransifexAPI from 'transifex-api-es6';
 import path from 'path';
 import { promises as fs } from 'fs';
@@ -96,7 +96,7 @@ const load = async (scope, cached) => {
  */
 export default function(contents) {
     const callback = this.async();
-    this.cacheable(true);
+    this.cacheable(false);
     if(!callback) {
         return contents;
     }

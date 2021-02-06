@@ -1,5 +1,5 @@
 import test from 'ava';
-import findFile from '../src/lib/find-file';
+import findFile from '../src/lib/find-file.mjs';
 import path from 'path';
 import { promises as fs } from 'fs';
 import os from 'os';
