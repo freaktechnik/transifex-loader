@@ -71,7 +71,8 @@ hostname=https://example.com`),
         },
         getOptions() {
             return {
-                store: !query || !query.includes('-store')
+                store: !query || !query.includes('-store'),
+                disableCache: !!query && query.includes('disableCache')
             };
         }
     };

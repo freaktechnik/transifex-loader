@@ -5,6 +5,9 @@ import {
 } from './_mock-loader-env';
 import path from 'path';
 import { promises as fs } from 'fs';
+import TransifexConfig from 'transifex-config';
+import sinon from 'sinon';
+import { MatchesSourceError } from 'transifex-config/lib/errors.js';
 
 test.afterEach.always((t) => {
     if(t.context.env) {
@@ -126,6 +129,22 @@ test("Returns cached version when no .tx/config is found", async (t) => {
     t.is(mockEnvironment._warning.toString(), "Error: Could not find .tx/config");
 });
 
-test.todo("No-caching query");
+test.serial("No-caching query", async (t) => {
+    const mockEnvironment = await getMockEnvironment("?disableCache", true),
+        txcStub = sinon.stub(TransifexConfig.prototype, 'getResource')
+            .throws(new MatchesSourceError(mockEnvironment.resourcePath));
+    t.teardown(() => txcStub.restore());
+    t.context.env = mockEnvironment;
+
+    transifexLoader.call(mockEnvironment, "test");
+    const result = await mockEnvironment._promise;
+    mockEnvironment._wasSuccessful();
+
+    t.is(result, "test");
+
+
+    t.falsy(mockEnvironment._error);
+});
+
 test.todo("Fallback to .transifexrc in home dir");
 test.todo('Network error when fetching resource content');
