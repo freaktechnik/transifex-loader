@@ -5,7 +5,6 @@
   "main": "dist/transifex-loader.js",
   "scripts": {
     "test": "npm run lint && nyc ava",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint:js": "eslint src/ test/",
     "lint:ec": "eclint check $(git ls-files)",
     "lint": "npm run lint:js && npm run lint:ec",
@@ -35,7 +34,6 @@
     "@freaktechnik/eslint-config-webpack": "^8.0.2",
     "ava": "^3.10.1",
     "babel-plugin-module-rewrite": "0.2.0",
-    "codecov": "^3.7.1",
     "eclint": "^2.8.1",
     "eslint": "^7.19.0",
     "nyc": "^15.1.0",
@@ -53,6 +51,12 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/freaktechnik/transifex-loader.git"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
   },
   "ava": {
     "babel": {
