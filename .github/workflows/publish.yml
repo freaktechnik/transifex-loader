@@ -6,6 +6,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment:
+      name: publish
+      url: https://npmjs.com/package/transifex-loader
     steps:
       - uses: actions/cache@v2
         with:
