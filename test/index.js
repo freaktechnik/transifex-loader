@@ -16,7 +16,7 @@ test("Bypasses if it can't be async", (t) => {
     const content = "foo bar";
     const mockEnvironment = {
         async() {
-            return undefined;
+            // do nothing
         },
         cacheable(cacheable) {
             this._cacheable = cacheable;
