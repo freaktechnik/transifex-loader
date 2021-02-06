@@ -19,7 +19,6 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
-    "loader-utils": "^2.0.0",
     "mz": "^2.7.0",
     "transifex-api-es6": "^0.2.4",
     "transifex-config": "^4.0.1"
@@ -43,7 +42,7 @@
     "webpack-node-externals": "^2.5.0"
   },
   "peerDependencies": {
-    "webpack": "^4.0.0"
+    "webpack": ">=5.0.0"
   },
   "bugs": {
     "url": "https://github.com/freaktechnik/transifex-loader/issues"

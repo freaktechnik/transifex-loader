@@ -9,7 +9,6 @@ import {
 } from 'transifex-config/lib/load-config';
 import findFile from './lib/find-file';
 import TransifexAPI from 'transifex-api-es6';
-import loaderUtils from 'loader-utils';
 import path from 'path';
 import fs from 'mz/fs';
 
@@ -17,7 +16,7 @@ const load = async (scope, cached) => {
     const options = Object.assign({
             disableCache: false,
             store: true
-        }, loaderUtils.getOptions(scope)),
+        }, scope.getOptions()),
         gracefulError = (error) => {
             scope.emitWarning(error);
         },
