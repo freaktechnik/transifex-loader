@@ -10,7 +10,7 @@ import {
 import findFile from './lib/find-file';
 import TransifexAPI from 'transifex-api-es6';
 import path from 'path';
-import fs from 'mz/fs';
+import { promises as fs } from 'fs';
 
 const load = async (scope, cached) => {
     const options = Object.assign({

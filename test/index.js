@@ -4,7 +4,7 @@ import {
     getMockEnv as getMockEnvironment, cleanUpMockEnv as cleanUpMockEnvironment
 } from './_mock-loader-env';
 import path from 'path';
-import fs from 'mz/fs';
+import { promises as fs } from 'fs';
 
 test.afterEach.always((t) => {
     if(t.context.env) {

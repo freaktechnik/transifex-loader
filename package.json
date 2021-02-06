@@ -19,7 +19,6 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
-    "mz": "^2.7.0",
     "transifex-api-es6": "^0.2.4",
     "transifex-config": "^4.0.1"
   },
@@ -89,7 +88,7 @@
     ]
   },
   "engines": {
-    "node": ">= 10.13.0"
+    "node": ">= 11.14.0"
   },
   "sideEffects": false
 }

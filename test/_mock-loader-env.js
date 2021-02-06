@@ -1,6 +1,6 @@
 import path from 'path';
 import os from 'os';
-import fs from 'mz/fs';
+import { promises as fs } from 'fs';
 import randomString from 'random-string';
 
 const getMockEnvironment = async (query = "", generateResource = true, resourceName = "resource", noFiles = false) => {

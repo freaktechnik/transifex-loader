@@ -1,7 +1,7 @@
 import test from 'ava';
 import findFile from '../src/lib/find-file';
 import path from 'path';
-import fs from 'mz/fs';
+import { promises as fs } from 'fs';
 import os from 'os';
 import randomString from 'random-string';
 
