@@ -8,7 +8,7 @@ import {
     TXCONFIG
 } from 'transifex-config/lib/load-config.js';
 import findFile from './lib/find-file.mjs';
-import TransifexAPI from 'transifex-api-es6';
+import { getResource } from './lib/api.mjs';
 import path from 'path';
 import { promises as fs } from 'fs';
 
@@ -67,15 +67,18 @@ const load = async (scope, cached) => {
     const { main } = await txc.getConfig(),
         config = await txc.getRC(main.host),
         transifex = new TransifexAPI({
-            user: config[main.host].username,
-            password: config[main.host].password,
-            projectName: resource.project,
-            resourceName: resource.name
         }),
         mappedLang = await txc.getMappedLang(resource.lang, resource);
-    resource.lang = mappedLang;
-    try {
-        const output = await transifex.getResourceTranslation(resource.lang, resource.name);
+        resource.lang = mappedLang;
+        try {
+        const output = await getResource({
+            user: config[main.host].username,
+            password: config[main.host].password,
+            project: resource.project,
+            resource: resource.name,
+            language: resource.lang,
+            organization: '???'
+        });
 
         if(options.store) {
             await fs.writeFile(scope.resourcePath, output, 'utf-8');
