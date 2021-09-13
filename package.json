@@ -42,7 +42,7 @@
     "nyc": "^15.1.0",
     "random-string": "^0.2.0",
     "sinon": "^11.1.2",
-    "webpack": "5.52.0",
+    "webpack": "5.52.1",
     "webpack-cli": "^4.8.0",
     "webpack-node-externals": "^3.0.0"
   },
