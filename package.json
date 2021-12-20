@@ -30,7 +30,7 @@
   "devDependencies": {
     "@ava/babel": "^2.0.0",
     "@babel/core": "^7.16.0",
-    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-env": "^7.16.5",
     "@babel/register": "^7.16.0",
     "@freaktechnik/eslint-config-node": "^8.0.2",
     "@freaktechnik/eslint-config-test": "^8.0.2",
