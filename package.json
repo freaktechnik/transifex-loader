@@ -3,7 +3,6 @@
   "version": "6.0.0",
   "description": "Webpack loader to fetch imported translation files from transifex.",
   "main": "dist/transifex-loader.js",
-  "type": "commonjs",
   "exports": {
     "import": "./src/index.mjs",
     "require": "./dist/transifex-loader.js"
@@ -28,14 +27,13 @@
     "transifex-config": "^4.0.1"
   },
   "devDependencies": {
-    "@ava/babel": "^2.0.0",
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
     "@babel/register": "^7.16.7",
     "@freaktechnik/eslint-config-node": "^8.0.2",
     "@freaktechnik/eslint-config-test": "^8.0.2",
     "@freaktechnik/eslint-config-webpack": "^8.0.2",
-    "ava": "^3.10.1",
+    "ava": "^4.0.1",
     "babel-plugin-module-rewrite": "0.2.0",
     "eclint": "^2.8.1",
     "eslint": "^7.32.0",
@@ -62,16 +60,6 @@
       "text"
     ]
   },
-  "ava": {
-    "babel": {
-      "testOptions": {
-        "babelrc": false
-      }
-    },
-    "require": [
-      "@babel/register"
-    ]
-  },
   "babel": {
     "presets": [
       [
@@ -83,18 +71,10 @@
           "modules": "commonjs"
         }
       ]
-    ],
-    "plugins": [
-      [
-        "module-rewrite",
-        {
-          "replaceFunc": "./test/_rewrite-modules.js"
-        }
-      ]
     ]
   },
   "engines": {
-    "node": ">= 11.14.0"
+    "node": ">= 12.22.0"
   },
   "sideEffects": false
 }

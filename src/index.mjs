@@ -66,8 +66,6 @@ const load = async (scope, cached) => {
 
     const { main } = await txc.getConfig(),
         config = await txc.getRC(main.host),
-        transifex = new TransifexAPI({
-        }),
         mappedLang = await txc.getMappedLang(resource.lang, resource);
         resource.lang = mappedLang;
         try {
