@@ -21,9 +21,8 @@ export default {
         if(username !== 'api') {
             throw new Error('Must use token authentication. See https://docs.transifex.com/client/client-configuration#section-~-transifexrc on how to configure client to authenticate with a token.');
         }
-        //TODO language of resource???
         const Authorization = `Bearer ${password}`,
-            response = await fetch(`https://rest.api.transifex.com/resource_strings_async_downloads`, {
+            response = await fetch(`https://rest.api.transifex.com/resource_translations_async_downloads`, {
                 headers: {
                     Authorization,
                     'Accept': 'application/vnd.api+json',
@@ -33,9 +32,16 @@ export default {
                     data: {
                         attributes: {
                             'content_encoding': 'text',
-                            'file_type': 'default'
+                            'file_type': 'default',
+                            mode: 'default'
                         },
                         relationships: {
+                            language: {
+                                data: {
+                                    id: `l:${language}`,
+                                    type: 'languages'
+                                }
+                            },
                             resource: {
                                 data: {
                                     id: `o:${organization}:p:${project}:r:${resource}`,
@@ -43,7 +49,7 @@ export default {
                                 }
                             }
                         },
-                        type: 'resource_strings_async_downloads'
+                        type: 'resource_translations_async_downloads'
                     }
                 }),
                 redirect: 'manual',
@@ -78,7 +84,7 @@ export default {
             throw new Error('Must use token authentication. See https://docs.transifex.com/client/client-configuration#section-~-transifexrc on how to configure client to authenticate with a token.');
         }
         const Authorization = `Bearer ${password}`,
-            url = `https://rest.api.transifex.com/resource_strings_async_downloads/${downloadId}`,
+            url = `https://rest.api.transifex.com/resource_translations_async_downloads/${downloadId}`,
             startTime = Date.now();
         while((status === 'pending' || status === 'processing') && Date.now() - startTime <= timeout) {
             const response = await fetch(url, {
