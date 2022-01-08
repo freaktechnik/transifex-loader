@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
-import { setTimeout } from 'timers/promises';
+import { setTimeout } from 'node:timers/promises';
 
 const ONE_MINUTE = 1000,
-    TEN_MINUTES = 10 * 1000,
+    TEN_MINUTES = 10000,
     STATUS_CODE = {
         Ok: 200,
         Accepted: 202,

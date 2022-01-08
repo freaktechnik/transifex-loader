@@ -1,10 +1,10 @@
 import test from 'ava';
 import transifexLoader from '../src/index.mjs';
 import {
-    getMockEnv as getMockEnvironment, cleanUpMockEnv as cleanUpMockEnvironment
-} from './_mock-loader-env.mjs';
-import path from 'path';
-import { promises as fs } from 'fs';
+    getMockEnvironment, cleanUpMockEnvironment
+} from './_mock-loader-environment.mjs';
+import path from 'node:path';
+import { promises as fs } from 'node:fs';
 import TransifexConfig from 'transifex-config';
 import sinon from 'sinon';
 import { MatchesSourceError } from 'transifex-config/lib/errors.js';

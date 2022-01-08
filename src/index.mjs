@@ -9,8 +9,8 @@ import {
 } from 'transifex-config/lib/load-config.js';
 import findFile from './lib/find-file.mjs';
 import { getResource } from './lib/api.mjs';
-import path from 'path';
-import { promises as fs } from 'fs';
+import path from 'node:path';
+import { promises as fs } from 'node:fs';
 
 const load = async (scope, cached) => {
     const options = Object.assign({
@@ -67,8 +67,8 @@ const load = async (scope, cached) => {
     const { main } = await txc.getConfig(),
         config = await txc.getRC(main.host),
         mappedLang = await txc.getMappedLang(resource.lang, resource);
-        resource.lang = mappedLang;
-        try {
+    resource.lang = mappedLang;
+    try {
         const output = await getResource({
             user: config[main.host].username,
             password: config[main.host].password,

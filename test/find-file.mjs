@@ -1,8 +1,8 @@
 import test from 'ava';
 import findFile from '../src/lib/find-file.mjs';
-import path from 'path';
-import { promises as fs } from 'fs';
-import os from 'os';
+import path from 'node:path';
+import { promises as fs } from 'node:fs';
+import os from 'node:os';
 import randomString from 'random-string';
 
 test("Find file in parent dir", async (t) => {

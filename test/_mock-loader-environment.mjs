@@ -1,6 +1,6 @@
-import path from 'path';
-import os from 'os';
-import { promises as fs } from 'fs';
+import path from 'node:path';
+import os from 'node:os';
+import { promises as fs } from 'node:fs';
 import randomString from 'random-string';
 
 const getMockEnvironment = async (query = "", generateResource = true, resourceName = "resource", noFiles = false) => {
@@ -96,5 +96,5 @@ const cleanUpMockEnvironment = async (mockEnvironment) => {
 };
 
 export {
-    getMockEnvironment as getMockEnv, cleanUpMockEnvironment as cleanUpMockEnv
+    getMockEnvironment, cleanUpMockEnvironment
 };
