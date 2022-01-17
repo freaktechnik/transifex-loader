@@ -12,6 +12,11 @@ import { getResource } from './lib/api.mjs';
 import path from 'node:path';
 import { promises as fs } from 'node:fs';
 
+/**
+ * @param {WebpackLoaderContext} scope - Webpack loader context.
+ * @param {string} cached - Current file contents.
+ * @returns {string|Buffer} File contents.
+ */
 const load = async (scope, cached) => {
     const options = Object.assign({
             disableCache: false,
@@ -75,7 +80,7 @@ const load = async (scope, cached) => {
             project: resource.project,
             resource: resource.name,
             language: resource.lang,
-            organization: '???'
+            organization: resource.organization
         });
 
         if(options.store) {

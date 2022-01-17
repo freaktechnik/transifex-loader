@@ -2,18 +2,15 @@
   "name": "transifex-loader",
   "version": "6.0.0",
   "description": "Webpack loader to fetch imported translation files from transifex.",
-  "main": "dist/transifex-loader.js",
   "exports": {
-    "import": "./src/index.mjs",
-    "require": "./dist/transifex-loader.js"
+    "import": "./src/index.mjs"
   },
+  "type": "module",
   "scripts": {
     "test": "npm run lint && nyc ava",
     "lint:js": "eslint --ext js,mjs src/ test/",
     "lint:ec": "eclint check $(git ls-files)",
-    "lint": "npm run lint:js && npm run lint:ec",
-    "build": "webpack --mode=production",
-    "prepublishOnly": "npm run build"
+    "lint": "npm run lint:js && npm run lint:ec"
   },
   "keywords": [
     "transifex",
@@ -27,25 +24,14 @@
     "transifex-config": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/preset-env": "^7.16.7",
-    "@babel/register": "^7.16.9",
     "@freaktechnik/eslint-config-node": "^9.0.3",
     "@freaktechnik/eslint-config-test": "^9.0.1",
-    "@freaktechnik/eslint-config-webpack": "^9.0.0",
     "ava": "^4.0.1",
-    "babel-plugin-module-rewrite": "0.2.0",
     "eclint": "^2.8.1",
     "eslint": "^8.7.0",
     "nyc": "^15.1.0",
     "random-string": "^0.2.0",
-    "sinon": "^12.0.1",
-    "webpack": "5.66.0",
-    "webpack-cli": "^4.9.1",
-    "webpack-node-externals": "^3.0.0"
-  },
-  "peerDependencies": {
-    "webpack": "^5.35.1"
+    "sinon": "^12.0.1"
   },
   "bugs": {
     "url": "https://github.com/freaktechnik/transifex-loader/issues"
@@ -58,19 +44,6 @@
     "reporter": [
       "lcov",
       "text"
-    ]
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          },
-          "modules": "commonjs"
-        }
-      ]
     ]
   },
   "engines": {

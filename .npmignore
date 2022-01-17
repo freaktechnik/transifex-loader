@@ -1,6 +1,5 @@
 *~
 .*
-webpack.config.js
 .nyc_output
 coverage
 test

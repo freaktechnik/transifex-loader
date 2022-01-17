@@ -9,9 +9,9 @@ import TransifexConfig from 'transifex-config';
 import sinon from 'sinon';
 import { MatchesSourceError } from 'transifex-config/lib/errors.js';
 
-test.afterEach.always((t) => {
+test.afterEach.always(async (t) => {
     if(t.context.env) {
-        return cleanUpMockEnvironment(t.context.env);
+        await cleanUpMockEnvironment(t.context.env);
     }
 });
 
