@@ -20,7 +20,7 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^3.2.1",
+    "node-fetch": "^3.2.3",
     "transifex-config": "^5.0.0"
   },
   "devDependencies": {
