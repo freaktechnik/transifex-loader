@@ -6,7 +6,7 @@ import {
 import path from 'node:path';
 import { promises as fs } from 'node:fs';
 import TransifexConfig from 'transifex-config';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 import { MatchesSourceError } from 'transifex-config/lib/errors.js';
 
 test.afterEach.always(async (t) => {
@@ -71,7 +71,7 @@ test.failing.skip("found resource without writing it", async (t) => { // eslint-
 
     t.is(result, "bar baz");
 
-    const diskContents = await fs.readFile(mockEnvironment.resourcePath, 'utf-8');
+    const diskContents = await fs.readFile(mockEnvironment.resourcePath, 'utf8');
     t.is(diskContents, "foo bar");
 
     t.deepEqual(mockEnvironment._dependencies, [
@@ -90,7 +90,7 @@ test.failing.skip("found resource and wrote it back to disk", async (t) => { // 
 
     t.is(result, "bar baz");
 
-    const diskContents = await fs.readFile(mockEnvironment.resourcePath, 'utf-8');
+    const diskContents = await fs.readFile(mockEnvironment.resourcePath, 'utf8');
     t.is(diskContents, "bar baz");
 
     t.deepEqual(mockEnvironment._dependencies, [
@@ -131,7 +131,7 @@ test("Returns cached version when no .tx/config is found", async (t) => {
 
 test.serial("No-caching query", async (t) => {
     const mockEnvironment = await getMockEnvironment("?disableCache", true),
-        txcStub = sinon.stub(TransifexConfig.prototype, 'getResource')
+        txcStub = stub(TransifexConfig.prototype, 'getResource')
             .throws(new MatchesSourceError(mockEnvironment.resourcePath));
     t.teardown(() => txcStub.restore());
     t.context.env = mockEnvironment;

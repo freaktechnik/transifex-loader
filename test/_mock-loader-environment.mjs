@@ -80,15 +80,14 @@ hostname=https://example.com`),
 
 const cleanUpMockEnvironment = async (mockEnvironment) => {
     if(mockEnvironment.context) {
-        const ignore = () => { /* nothing */ };
         const toRemove = [
-            fs.unlink(path.join(mockEnvironment.context, '.tx/config')).catch(ignore),
-            fs.unlink(path.join(mockEnvironment.context, '.transifexrc')).catch(ignore)
+            fs.unlink(path.join(mockEnvironment.context, '.tx/config')),
+            fs.unlink(path.join(mockEnvironment.context, '.transifexrc'))
         ];
         if(mockEnvironment.resourcePath) {
-            toRemove.push(fs.unlink(mockEnvironment.resourcePath).catch(ignore));
+            toRemove.push(fs.unlink(mockEnvironment.resourcePath));
         }
-        await Promise.all(toRemove);
+        await Promise.allSettled(toRemove);
 
         await fs.rmdir(path.join(mockEnvironment.context, '.tx'));
         await fs.rmdir(mockEnvironment.context);

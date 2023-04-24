@@ -42,7 +42,7 @@ const load = async (scope, cached) => {
     try {
         txc = new TransifexConfig(txcBase);
     }
-    catch(error) {
+    catch{
         scope.emitWarning(`Did not find required transifex config files`);
         return cached;
     }
@@ -84,12 +84,12 @@ const load = async (scope, cached) => {
         });
 
         if(options.store) {
-            await fs.writeFile(scope.resourcePath, output, 'utf-8');
+            await fs.writeFile(scope.resourcePath, output, 'utf8');
         }
 
         return output;
     }
-    catch(error) {
+    catch{
         // Handle network errors by returning the cached version.
         return cached;
     }
@@ -97,8 +97,8 @@ const load = async (scope, cached) => {
 
 /**
  * @param {string} contents - Contents of the loaded file.
- * @this external:Loader
- * @returns {Promise.<string>|string} Updated translation file.
+ * @returns {Promise<string>|string|undefined} Updated translation file.
+ * @this {any}
  */
 export default function(contents) {
     const callback = this.async();
