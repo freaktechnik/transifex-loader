@@ -49,5 +49,8 @@
   "engines": {
     "node": ">= 12.22.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "provenance": true
+  }
 }

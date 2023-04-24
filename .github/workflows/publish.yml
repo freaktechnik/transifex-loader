@@ -6,6 +6,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     environment:
       name: publish
       url: https://npmjs.com/package/transifex-loader
