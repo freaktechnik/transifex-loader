@@ -24,7 +24,7 @@
   "devDependencies": {
     "@freaktechnik/eslint-config-node": "^9.2.1",
     "@freaktechnik/eslint-config-test": "^9.2.1",
-    "ava": "^5.2.0",
+    "ava": "^5.3.0",
     "eslint": "^8.41.0",
     "nyc": "^15.1.0",
     "random-string": "^0.2.0",
