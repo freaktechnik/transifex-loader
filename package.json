@@ -28,7 +28,7 @@
     "eslint": "^8.42.0",
     "nyc": "^15.1.0",
     "random-string": "^0.2.0",
-    "sinon": "^15.1.0"
+    "sinon": "^15.1.2"
   },
   "bugs": {
     "url": "https://github.com/freaktechnik/transifex-loader/issues"
