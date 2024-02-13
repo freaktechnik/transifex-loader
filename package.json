@@ -7,7 +7,8 @@
   },
   "type": "module",
   "scripts": {
-    "test": "npm run lint && nyc ava",
+    "test": "npm run lint && c8 ava",
+    "coverage": "c8 report -r lcov",
     "lint": "eslint --ext js,mjs src/ test/"
   },
   "keywords": [
@@ -25,8 +26,8 @@
     "@freaktechnik/eslint-config-node": "^9.2.1",
     "@freaktechnik/eslint-config-test": "^9.2.1",
     "ava": "^6.1.1",
+    "c8": "^9.1.0",
     "eslint": "^8.56.0",
-    "nyc": "^15.1.0",
     "random-string": "^0.2.0",
     "sinon": "^17.0.1"
   },

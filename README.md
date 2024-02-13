@@ -1,6 +1,6 @@
 # transifex-loader
 
-[![codecov](https://codecov.io/gh/freaktechnik/transifex-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/freaktechnik/transifex-loader)
+[![codecov](https://codecov.io/gh/freaktechnik/transifex-loader/graph/badge.svg?token=DBYp5Rht9J)](https://codecov.io/gh/freaktechnik/transifex-loader)
 
 A loader, that fetches the content of string files from Transifex. Requires
 configuration via `.transifexrc` and `.tx/config` in the same format as the
