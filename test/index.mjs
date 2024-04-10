@@ -1,7 +1,7 @@
 import test from 'ava';
 import transifexLoader from '../src/index.mjs';
 import {
-    getMockEnvironment, cleanUpMockEnvironment
+    getMockEnvironment, cleanUpMockEnvironment,
 } from './_mock-loader-environment.mjs';
 import path from 'node:path';
 import { promises as fs } from 'node:fs';
@@ -16,27 +16,27 @@ test.afterEach.always(async (t) => {
 });
 
 test("Bypasses if it can't be async", (t) => {
-    const content = "foo bar";
-    const mockEnvironment = {
-        async() {
+    const content = "foo bar",
+        mockEnvironment = {
+            async() {
             // do nothing
+            },
+            cacheable(cacheable) {
+                this._cacheable = cacheable;
+            },
+            getOptions() {
+                return {};
+            },
         },
-        cacheable(cacheable) {
-            this._cacheable = cacheable;
-        },
-        getOptions() {
-            return {};
-        }
-    };
 
-    const result = transifexLoader.call(mockEnvironment, content);
+        result = transifexLoader.call(mockEnvironment, content);
     t.is(result, content);
     t.false(mockEnvironment._cacheable);
 });
 
 test("Bypasses on error", async (t) => {
-    const content = "foo bar";
-    const mockEnvironment = await getMockEnvironment(undefined, false, undefined, true);
+    const content = "foo bar",
+        mockEnvironment = await getMockEnvironment(undefined, false, undefined, true);
     t.context.env = mockEnvironment;
 
     transifexLoader.call(mockEnvironment, content);
@@ -61,7 +61,7 @@ test("Didn't find resource but loaded config", async (t) => {
     t.is(mockEnvironment._warning, `Could not find any transifex resource for ${mockEnvironment.resourcePath}.`);
 });
 
-test.failing.skip("found resource without writing it", async (t) => { // eslint-disable-line ava/no-skip-test
+test.failing.skip("found resource without writing it", async (t) => {
     const mockEnvironment = await getMockEnvironment("?-store");
     t.context.env = mockEnvironment;
 
@@ -76,11 +76,11 @@ test.failing.skip("found resource without writing it", async (t) => { // eslint-
 
     t.deepEqual(mockEnvironment._dependencies, [
         path.join(mockEnvironment.context, '.tx/config'),
-        path.join(mockEnvironment.context, '.transifexrc')
+        path.join(mockEnvironment.context, '.transifexrc'),
     ]);
 });
 
-test.failing.skip("found resource and wrote it back to disk", async (t) => { // eslint-disable-line ava/no-skip-test
+test.failing.skip("found resource and wrote it back to disk", async (t) => {
     const mockEnvironment = await getMockEnvironment();
     t.context.env = mockEnvironment;
 
@@ -95,7 +95,7 @@ test.failing.skip("found resource and wrote it back to disk", async (t) => { // 
 
     t.deepEqual(mockEnvironment._dependencies, [
         path.join(mockEnvironment.context, '.tx/config'),
-        path.join(mockEnvironment.context, '.transifexrc')
+        path.join(mockEnvironment.context, '.transifexrc'),
     ]);
 });
 

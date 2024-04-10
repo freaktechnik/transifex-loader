@@ -6,11 +6,11 @@ import os from 'node:os';
 import randomString from 'random-string';
 
 test("Find file in parent dir", async (t) => {
-    const searchedFile = "foo.bar";
-    const endDirectory = path.join(os.tmpdir(), `transifex-loader-test-${randomString({
-        length: 12
-    })}`);
-    const startDirectory = path.join(endDirectory, "/some/deep/path");
+    const searchedFile = "foo.bar",
+        endDirectory = path.join(os.tmpdir(), `transifex-loader-test-${randomString({
+            length: 12,
+        })}`),
+        startDirectory = path.join(endDirectory, "/some/deep/path");
 
     await fs.mkdir(endDirectory);
     await fs.writeFile(path.join(endDirectory, searchedFile), "foo bar");
@@ -23,8 +23,8 @@ test("Find file in parent dir", async (t) => {
 });
 
 test("Gives up once it reaches the root dir without result", async (t) => {
-    const searchedFile = "foo.bar";
-    const startDirectory = os.tmpdir();
+    const searchedFile = "foo.bar",
+        startDirectory = os.tmpdir();
 
     await t.throwsAsync(findFile(startDirectory, searchedFile));
 });

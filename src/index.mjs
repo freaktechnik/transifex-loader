@@ -1,11 +1,11 @@
 import {
     NoMatchingResourceError,
-    MatchesSourceError
+    MatchesSourceError,
 } from 'transifex-config/lib/errors.js';
 import TransifexConfig from 'transifex-config';
 import {
     TRANSIFEXRC,
-    TXCONFIG
+    TXCONFIG,
 } from 'transifex-config/lib/load-config.js';
 import findFile from './lib/find-file.mjs';
 import { getResource } from './lib/api.mjs';
@@ -20,17 +20,17 @@ import { promises as fs } from 'node:fs';
 const load = async (scope, cached) => {
     const options = Object.assign({
             disableCache: false,
-            store: true
+            store: true,
         }, scope.getOptions()),
         gracefulError = (error) => {
             scope.emitWarning(error);
         },
         [
             txrcBase,
-            txcBase
+            txcBase,
         ] = await Promise.all([
             findFile(scope.context, TRANSIFEXRC).catch(gracefulError),
-            findFile(scope.context, TXCONFIG).catch(gracefulError)
+            findFile(scope.context, TXCONFIG).catch(gracefulError),
         ]);
     if(!txcBase || !txrcBase) {
         return cached;
@@ -80,7 +80,7 @@ const load = async (scope, cached) => {
             project: resource.project,
             resource: resource.name,
             language: resource.lang,
-            organization: resource.organization
+            organization: resource.organization,
         });
 
         if(options.store) {

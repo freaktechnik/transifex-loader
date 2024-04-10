@@ -6,7 +6,7 @@ const ONE_MINUTE = 1000,
     STATUS_CODE = {
         Ok: 200,
         Accepted: 202,
-        SeeOther: 303
+        SeeOther: 303,
     };
 
 async function getDownload({
@@ -14,7 +14,7 @@ async function getDownload({
     password,
     downloadId,
     status,
-    timeout = TEN_MINUTES
+    timeout = TEN_MINUTES,
 }) {
     if(username !== 'api') {
         throw new Error('Must use token authentication. See https://docs.transifex.com/client/client-configuration#section-~-transifexrc on how to configure client to authenticate with a token.');
@@ -26,13 +26,13 @@ async function getDownload({
         const response = await fetch(url, {
             headers: {
                 Authorization,
-                Accept: 'application/vnd.api+json'
+                Accept: 'application/vnd.api+json',
             },
-            redirect: 'manual'
+            redirect: 'manual',
         });
         if(response.status === STATUS_CODE.Ok) {
             const body = await response.json();
-            status = body.attributes.status;
+            ({ status } = body.attributes);
             await setTimeout(ONE_MINUTE);
         }
         else if(response.status === STATUS_CODE.SeeOther) {
@@ -55,7 +55,7 @@ export async function getResource({
     project,
     resource,
     language,
-    organization
+    organization,
 }) {
     if(username !== 'api') {
         throw new Error('Must use token authentication. See https://docs.transifex.com/client/client-configuration#section-~-transifexrc on how to configure client to authenticate with a token.');
@@ -65,34 +65,34 @@ export async function getResource({
             headers: {
                 Authorization,
                 'Accept': 'application/vnd.api+json',
-                'Content-Type': 'application/vnd.api+json'
+                'Content-Type': 'application/vnd.api+json',
             },
             body: JSON.stringify({
                 data: {
                     attributes: {
                         'content_encoding': 'text',
                         'file_type': 'default',
-                        mode: 'default'
+                        mode: 'default',
                     },
                     relationships: {
                         language: {
                             data: {
                                 id: `l:${language}`,
-                                type: 'languages'
-                            }
+                                type: 'languages',
+                            },
                         },
                         resource: {
                             data: {
                                 id: `o:${organization}:p:${project}:r:${resource}`,
-                                type: 'resources'
-                            }
-                        }
+                                type: 'resources',
+                            },
+                        },
                     },
-                    type: 'resource_translations_async_downloads'
-                }
+                    type: 'resource_translations_async_downloads',
+                },
             }),
             redirect: 'manual',
-            method: 'POST'
+            method: 'POST',
         });
     if(response.ok && response.status === STATUS_CODE.Accepted) {
         const fileLocation = response.headers.get('Content-Location');
@@ -108,7 +108,7 @@ export async function getResource({
             username,
             password,
             downloadId: body.id,
-            status: body.attributes.status
+            status: body.attributes.status,
         });
     }
 }
