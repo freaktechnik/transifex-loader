@@ -61,7 +61,7 @@ test("Didn't find resource but loaded config", async (t) => {
     t.is(mockEnvironment._warning, `Could not find any transifex resource for ${mockEnvironment.resourcePath}.`);
 });
 
-test.failing.skip("found resource without writing it", async (t) => {
+test.failing.skip("found resource without writing it", async (t) => { // eslint-disable-line ava/no-skip-test
     const mockEnvironment = await getMockEnvironment("?-store");
     t.context.env = mockEnvironment;
 
@@ -80,7 +80,7 @@ test.failing.skip("found resource without writing it", async (t) => {
     ]);
 });
 
-test.failing.skip("found resource and wrote it back to disk", async (t) => {
+test.failing.skip("found resource and wrote it back to disk", async (t) => { // eslint-disable-line ava/no-skip-test
     const mockEnvironment = await getMockEnvironment();
     t.context.env = mockEnvironment;
 
