@@ -4,4 +4,4 @@ import freaktechnikConfigTest from "@freaktechnik/eslint-config-test";
 export default [
     ...freaktechnikConfigNode,
     ...freaktechnikConfigTest,
-]
+];
