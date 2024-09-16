@@ -29,7 +29,7 @@
     "c8": "^10.1.2",
     "eslint": "^9.10.0",
     "random-string": "^0.2.0",
-    "sinon": "^18.0.0"
+    "sinon": "^19.0.2"
   },
   "bugs": {
     "url": "https://github.com/freaktechnik/transifex-loader/issues"
