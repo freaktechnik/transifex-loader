@@ -19,7 +19,6 @@
   "author": "Martin Giger (https://humanoids.be)",
   "license": "MIT",
   "dependencies": {
-    "@freaktechnik/eslint-config-base": "^10.1.6",
     "node-fetch": "^3.3.2",
     "transifex-config": "^5.0.0"
   },
