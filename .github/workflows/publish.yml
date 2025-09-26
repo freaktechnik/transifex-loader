@@ -19,7 +19,4 @@ jobs:
       - run: npm ci --no-audit
       - run: npm test
       - run: npm run build
-      - uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./package.json
+      - run: npm publish
