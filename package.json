@@ -27,7 +27,7 @@
     "@freaktechnik/eslint-config-test": "^13.0.0",
     "ava": "^8.0.1",
     "c8": "^11.0.0",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "random-string": "^0.2.0",
     "sinon": "^22.0.0"
   },
