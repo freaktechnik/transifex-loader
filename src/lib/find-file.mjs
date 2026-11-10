@@ -12,9 +12,7 @@ const find = async (start, file) => {
         if(nextDirectory == directory) {
             throw new Error(`Could not find ${file}`);
         }
-        else {
-            return find(nextDirectory, file);
-        }
+        return find(nextDirectory, file);
     }
 };
 

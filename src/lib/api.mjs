@@ -1,14 +1,24 @@
 import fetch from 'node-fetch';
 import { setTimeout } from 'node:timers/promises';
 
-const ONE_MINUTE = 1000,
-    TEN_MINUTES = 10000,
+const ONE_MINUTE = 60000,
+    TEN_MINUTES = 600000,
     STATUS_CODE = {
         Ok: 200,
         Accepted: 202,
         SeeOther: 303,
     };
 
+/**
+ *
+ * @param {object} options - Options for the download.
+ * @param {'api'} options.username - Username to download with.
+ * @param {string} options.password - Password to download with.
+ * @param {string} options.downloadId - The ID of the download.
+ * @param {string} [options.status] - The status of the download, if known.
+ * @param {number} [options.timeout=600000] - Timeout in miliseconds.
+ * @returns {string} The contents of the download.
+ */
 async function getDownload({
     username,
     password,
@@ -36,8 +46,9 @@ async function getDownload({
             await setTimeout(ONE_MINUTE);
         }
         else if(response.status === STATUS_CODE.SeeOther) {
-            const fileLocation = response.headers.get('Location');
-            return fetch(fileLocation);
+            const fileLocation = response.headers.get('Location'),
+                fileResponse = await fetch(fileLocation);
+            return fileResponse.text();
         }
     }
     if(status === 'failed') {
@@ -49,6 +60,17 @@ async function getDownload({
     throw new Error(`Unexpected status ${status} while downloading ${downloadId}`);
 }
 
+/**
+ *
+ * @param {object} options - Options to identify the resource.
+ * @param {'api'} options.username - Username to fetch the resource with.
+ * @param {string} options.password - Password to fetch the resource with.
+ * @param {string} options.project - Name of the project the resource belongs to.
+ * @param {string} options.resource - Name of the resource to get.
+ * @param {string} options.language - Target language of the resource.
+ * @param {string} options.organization - Organization the project belongs to.
+ * @returns {string|undefined} The contents of the resource.
+ */
 export async function getResource({
     username,
     password,
@@ -94,21 +116,22 @@ export async function getResource({
             redirect: 'manual',
             method: 'POST',
         });
-    if(response.ok && response.status === STATUS_CODE.Accepted) {
-        const fileLocation = response.headers.get('Content-Location');
-        if(fileLocation) {
-            const fileRequest = await fetch(fileLocation);
-            return fileRequest.text();
-        }
-        const body = await response.json();
-        if(body.attributes.status === 'failed') {
-            throw new Error(`Transifex could not provide a download for ${resource}`);
-        }
-        return getDownload({
-            username,
-            password,
-            downloadId: body.id,
-            status: body.attributes.status,
-        });
+    if(!response.ok || response.status !== STATUS_CODE.Accepted) {
+        return;
     }
+    const fileLocation = response.headers.get('Content-Location');
+    if(fileLocation) {
+        const fileRequest = await fetch(fileLocation);
+        return fileRequest.text();
+    }
+    const body = await response.json();
+    if(body.attributes.status === 'failed') {
+        throw new Error(`Transifex could not provide a download for ${resource}`);
+    }
+    return getDownload({
+        username,
+        password,
+        downloadId: body.id,
+        status: body.attributes.status,
+    });
 }

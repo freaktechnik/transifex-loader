@@ -60,8 +60,8 @@ hostname=https://example.com`),
             context,
             query,
             _dependencies: [],
-            addDependency(dep) {
-                this._dependencies.push(dep);
+            addDependency(dependency) {
+                this._dependencies.push(dependency);
             },
             emitError(error) {
                 this._error = error;
@@ -79,19 +79,21 @@ hostname=https://example.com`),
     },
 
     cleanUpMockEnvironment = async (mockEnvironment) => {
-        if(mockEnvironment.context) {
-            const toRemove = [
-                fs.unlink(path.join(mockEnvironment.context, '.tx/config')),
-                fs.unlink(path.join(mockEnvironment.context, '.transifexrc')),
-            ];
-            if(mockEnvironment.resourcePath) {
-                toRemove.push(fs.unlink(mockEnvironment.resourcePath));
-            }
-            await Promise.allSettled(toRemove);
-
-            await fs.rmdir(path.join(mockEnvironment.context, '.tx'));
-            await fs.rmdir(mockEnvironment.context);
+        if(!mockEnvironment.context) {
+            return;
         }
+
+        const toRemove = [
+            fs.unlink(path.join(mockEnvironment.context, '.tx/config')),
+            fs.unlink(path.join(mockEnvironment.context, '.transifexrc')),
+        ];
+        if(mockEnvironment.resourcePath) {
+            toRemove.push(fs.unlink(mockEnvironment.resourcePath));
+        }
+        await Promise.allSettled(toRemove);
+
+        await fs.rmdir(path.join(mockEnvironment.context, '.tx'));
+        await fs.rmdir(mockEnvironment.context);
     };
 
 export {

@@ -2,22 +2,38 @@
   "name": "transifex-loader",
   "version": "6.0.0",
   "description": "Webpack loader to fetch imported translation files from transifex.",
-  "exports": {
-    "import": "./src/index.mjs"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/freaktechnik/transifex-loader.git"
   },
+  "bugs": "https://github.com/freaktechnik/transifex-loader/issues",
+  "author": "Martin Giger (https://humanoids.be)",
   "type": "module",
+  "exports": {
+    "import": "./src/index.mjs",
+    "default": "./src/index.mjs"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
     "test": "npm run lint && c8 ava",
-    "coverage": "c8 report -r lcov",
-    "lint": "eslint src/ test/"
+    "coverage": "c8 report --reporter lcov",
+    "lint": "eslint src/ test/ package.json"
   },
+  "files": [
+    "src/**/*.mjs"
+  ],
   "keywords": [
     "transifex",
     "webpack",
     "loader"
   ],
-  "author": "Martin Giger (https://humanoids.be)",
-  "license": "MIT",
   "dependencies": {
     "node-fetch": "^3.3.2",
     "transifex-config": "^5.0.0"
@@ -31,24 +47,10 @@
     "random-string": "^0.2.0",
     "sinon": "^22.1.0"
   },
-  "bugs": {
-    "url": "https://github.com/freaktechnik/transifex-loader/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/freaktechnik/transifex-loader.git"
-  },
   "nyc": {
     "reporter": [
       "lcov",
       "text"
     ]
-  },
-  "engines": {
-    "node": ">= 16.0.0"
-  },
-  "sideEffects": false,
-  "publishConfig": {
-    "provenance": true
   }
 }

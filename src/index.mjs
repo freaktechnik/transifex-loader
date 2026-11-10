@@ -18,11 +18,7 @@ import { promises as fs } from 'node:fs';
  * @returns {string|Buffer} File contents.
  */
 const load = async (scope, cached) => {
-    const options = Object.assign({
-            disableCache: false,
-            store: true,
-        }, scope.getOptions()),
-        gracefulError = (error) => {
+    const gracefulError = (error) => {
             scope.emitWarning(error);
         },
         [
@@ -54,6 +50,12 @@ const load = async (scope, cached) => {
     }
     scope.addDependency(path.join(txrcBase, TRANSIFEXRC));
 
+
+    const options = Object.assign({
+        disableCache: false,
+        store: true,
+    }, scope.getOptions());
+
     try {
         resource = await txc.getResource(scope.resourcePath, options.disableCache);
     }
@@ -62,7 +64,7 @@ const load = async (scope, cached) => {
             scope.emitWarning(`Could not find any transifex resource for ${scope.resourcePath}.`);
             return cached;
         }
-        else if(error instanceof MatchesSourceError) {
+        if(error instanceof MatchesSourceError) {
             return cached;
         }
 
@@ -97,7 +99,7 @@ const load = async (scope, cached) => {
 
 /**
  * @param {string} contents - Contents of the loaded file.
- * @returns {Promise<string>|string|undefined} Updated translation file.
+ * @returns {Promise<string>|string|undefined} Updated translation file via callback.
  * @this {any}
  */
 export default function(contents) {
